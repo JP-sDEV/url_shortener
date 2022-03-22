@@ -12,7 +12,7 @@ export const Modal = () => {
                 </Typography>
 
                 <Form />
-            </Paper>
+            </Paper> 
         </Container>
     )
    
