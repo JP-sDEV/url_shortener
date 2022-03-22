@@ -18,12 +18,12 @@ app.get("/home" , (req,res) => {
     res.send({express: "express connected"})
 })
 
-app.get("/", async(req, res) => {
+app.get("/allUrls", async(req, res) => {
 
     const shortUrls = await ShortUrl.find()
 
-    res.render("index", {
-        shortUrls: shortUrls
+    res.send({
+        urls: shortUrls
     })
 
 })
