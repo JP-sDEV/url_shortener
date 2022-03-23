@@ -9,7 +9,6 @@ mongoose.connect("mongodb://localhost/urlShortener", {
     useUnifiedTopology: true
 })
 
-app.set("view engine", "ejs")
 app.use(express.urlencoded({
     extended: true
 }))
@@ -19,7 +18,6 @@ app.get("/home" , (req,res) => {
 })
 
 app.get("/allUrls", async(req, res) => {
-
     const shortUrls = await ShortUrl.find()
 
     res.send({
@@ -57,7 +55,7 @@ app.get("/:shortUrl", async(req, res) => {
 
     shortUrl.clicks++
     shortUrl.save()
-    res.redirect(shortUrl.full)
+    res.send({url: shortUrl.full})
 })
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is up"))
