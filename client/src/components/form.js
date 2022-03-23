@@ -4,34 +4,46 @@ import { Grid, TextField, Button, FormControl } from '@mui/material';
 export const Form = () => {
 
     const [formData, setFormData] = useState({
-        shortUrl: null 
+        fullUrl: null 
     })
 
     const handleTextInput = (e) => {
         setFormData({
             ...formData, 
-            shortUrl: e.target.value
+            fullUrl: e.target.value
         })
     }
 
-    // todo 
-    const handleSubmit = () => {
+    const handleSubmit  = (e) => {
+
+        const urlForm = {
+            "full": formData.fullUrl
+        }
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(urlForm)
+        }
+
+        fetch("/shortUrls", requestOptions)
+        .then(res => res.json())
     }
 
     return (
         <div>
-            <h1>FORMS</h1>
-            <FormControl>
-                
-                <TextField 
-                    required
-                    fullWidth
-                    value = {formData.shortUrl}
-                    onChange = {(e) => handleTextInput(e)}
-                />
-                <Button variant="outlined" onSubmit={handleSubmit}>Shorten</Button>
-
-            </FormControl>
+            <form onSubmit={handleSubmit}>
+                <FormControl>
+                    <TextField 
+                        required
+                        fullWidth
+                        label="Full Url"
+                        value = {formData.shortUrl}
+                        onChange = {(e) => handleTextInput(e)}
+                    />
+                    <Button variant="outlined" type="submit" >Shorten</Button>
+                </FormControl>
+            </form>
         </div>
     )
    
