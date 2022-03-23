@@ -12,6 +12,7 @@ mongoose.connect("mongodb://localhost/urlShortener", {
 app.use(express.urlencoded({
     extended: true
 }))
+app.use(express.json());
 
 app.get("/home" , (req,res) => {
     res.send({express: "express connected"})
@@ -19,34 +20,29 @@ app.get("/home" , (req,res) => {
 
 app.get("/allUrls", async(req, res) => {
     const shortUrls = await ShortUrl.find()
-
     res.send({
         urls: shortUrls
     })
-
 })
 
 app.post("/shortUrls",  async(req, res) => {
-
     await ShortUrl.create({
-        full: req.body.fullUrl
+        full: String(req.body.full)
     })
-
-    res.redirect("/")
 }) 
 
 app.delete("/delUrl", async(req,res) => {
     const delUrl = await ShortUrl.findByIdAndDelete(req.body.id, (err, docs) => {
         if (err) {
-            console.log(err)
+            console.log(err) 
         }
         else {
             console.log("Deleted: ", docs)
         }
     })
-})
+}) 
 
-app.get("/:shortUrl", async(req, res) => {
+app.get("/:shortUrl", async(req, res) => { 
     const shortUrl = await ShortUrl.findOne({
         short: req.params.shortUrl
     })
