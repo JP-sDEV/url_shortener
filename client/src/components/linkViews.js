@@ -41,7 +41,7 @@ export const LinkViews = () => {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell align="left">
-                    <Button href={u.full}>
+                    <Button href={u.full} target="_blank">
                       {u.full}
                     </Button>
                   </TableCell>
