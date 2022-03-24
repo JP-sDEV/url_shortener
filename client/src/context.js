@@ -8,8 +8,14 @@ export default ({children}) => {
         data: []
     });
 
+    const [theme] = useState({
+        fontFamily: 'Courier New',
+        textTransfrom: "none"
+    });
+
     const store = {
-        state: [state, setState]
+        state: [state, setState],
+        theme: theme
     }
 
     return <AppContext.Provider value={store}>{children}</AppContext.Provider>
