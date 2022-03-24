@@ -23,6 +23,25 @@ export const LinkViews = () => {
     .then(data =>  (window.open(data.url, "_blank")))
   } 
 
+  const handleDelete = (e) => {
+
+    const delForm = {
+      "id": e.target.value
+    }
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(delForm)
+    }
+
+    fetch("/delUrl", requestOptions)
+    .then(res => res.json())
+    .catch((err) => {
+      console.log(err)
+    })
+
+  }
     return(
       <div>
         <TableContainer component={Paper}>
@@ -32,6 +51,7 @@ export const LinkViews = () => {
                 <TableCell align="left">Original Link (Full Url)</TableCell>
                 <TableCell align="center">Shortened Url</TableCell>
                 <TableCell align="center">Shortened Url Clicks</TableCell>
+                <TableCell align="center">Delete?</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -51,6 +71,9 @@ export const LinkViews = () => {
                     </Button>
                   </TableCell>
                   <TableCell align="center">{u.clicks}</TableCell>
+                  <TableCell align="center" >
+                    <Button onClick={(e) => handleDelete(e)} value={u._id}>🗑️</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
