@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Container, Paper, Typography } from '@mui/material';
 
 import { Form } from "./form.js"
@@ -6,10 +6,25 @@ import { Form } from "./form.js"
 export const Modal = () => {
     
     return (
-        <Container Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-            <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-                <Typography component="h1" variant="h4" align="center">
-                    Url Shortener
+        <Container Container
+                        component="main"
+                        maxWidth="lg"
+            >
+            <Paper 
+                variant="outlined" 
+                sx={{ 
+                    my: { xs: 3, m: 3 },
+                    p: { xs: 1, m: 3 }
+                    }}
+                >
+                <Typography 
+                    variant="h3"
+                    align="center"
+                    sx={{
+                        fontFamily: 'Courier New',
+                      }}
+                    >
+                    .Shorty URL
                 </Typography>
                 <Form />
             </Paper> 
