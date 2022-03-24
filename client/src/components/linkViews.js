@@ -43,16 +43,22 @@ export const LinkViews = () => {
   }
 
     return(
-      <div>
-        <TableContainer component={Paper}>
-          <Table style={{tableLayout: "auto"}} sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
+      <div style={{"margin": "1.5rem"}}>
+        <TableContainer 
+          component={Paper}
+          sx={{ 
+            display: "flex",
+            flexDirection: "row",
+            }}
+          >
+          <Table style={{tableLayout: "auto"}} aria-label="custom table">
+            <TableHead style={{backgroundColor:"#F1F1F1"}}>
+              <TableRow >
                 <TableCell align="left">Original Link (Full Url)</TableCell>
                 <TableCell align="center">Shortened Url</TableCell>
                 <TableCell align="center">Shortened Url Clicks</TableCell>
                 <TableCell align="center">Date Created (UTC)</TableCell>
-                <TableCell align="center">Delete?</TableCell>
+                <TableCell align="center">Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -68,8 +74,8 @@ export const LinkViews = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    <Button onClick={(e) => handleShortUrlClick(e)} variant="text" value={u.short}>
-                      {u.short}
+                    <Button onClick={(e) => handleShortUrlClick(e)} variant="text" value={u.short} sx={{textTransform: "none"}}>
+                      https://{u.short}.shorty
                     </Button>
                   </TableCell>
 
