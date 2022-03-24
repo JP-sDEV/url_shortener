@@ -34,7 +34,6 @@ export const LinkViews = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(delForm)
     }
-
     
     fetch("/delUrl", requestOptions)
     .then(res => res.json())
