@@ -35,22 +35,24 @@ export const LinkViews = () => {
       body: JSON.stringify(delForm)
     }
 
+    
     fetch("/delUrl", requestOptions)
     .then(res => res.json())
     .catch((err) => {
       console.log(err)
     })
-
   }
+
     return(
       <div>
         <TableContainer component={Paper}>
-          <Table style={{tableLayout: "fixed"}} sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table style={{tableLayout: "auto"}} sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell align="left">Original Link (Full Url)</TableCell>
                 <TableCell align="center">Shortened Url</TableCell>
                 <TableCell align="center">Shortened Url Clicks</TableCell>
+                <TableCell align="center">Date Created (UTC)</TableCell>
                 <TableCell align="center">Delete?</TableCell>
               </TableRow>
             </TableHead>
@@ -65,15 +67,23 @@ export const LinkViews = () => {
                       {u.full}
                     </Button>
                   </TableCell>
+
                   <TableCell align="center">
                     <Button onClick={(e) => handleShortUrlClick(e)} variant="text" value={u.short}>
                       {u.short}
                     </Button>
                   </TableCell>
+
                   <TableCell align="center">{u.clicks}</TableCell>
+
+                  <TableCell align="center" >
+                    {u.created.slice(0,10)}
+                  </TableCell>
+
                   <TableCell align="center" >
                     <Button onClick={(e) => handleDelete(e)} value={u._id}>🗑️</Button>
                   </TableCell>
+
                 </TableRow>
               ))}
             </TableBody>
