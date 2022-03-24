@@ -32,18 +32,16 @@ app.post("/shortUrls",  async(req, res) => {
 }) 
 
 app.delete("/delUrl", async(req,res) => {
-    const delUrl = await ShortUrl.findByIdAndDelete(req.body.id, (err, docs) => {
-        if (err) {
-            console.log(err) 
-        }
-        else {
-            console.log("Deleted: ", docs)
-        }
-    })
+
+    const deleteId = {
+        _id: req.body.id
+    }
+
+    await ShortUrl.findOneAndRemove(deleteId)
 }) 
 
 app.get("/:shortUrl", async(req, res) => { 
-    const shortUrl = await ShortUrl.findOne({
+    const shortUrl = await ShortUrl.findOne({ 
         short: req.params.shortUrl
     })
 
