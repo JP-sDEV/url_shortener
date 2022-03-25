@@ -20,9 +20,6 @@ export const Modal = () => {
                 <Typography 
                     variant="h3"
                     align="center"
-                    sx={{
-                        fontFamily: 'Courier New',
-                      }}
                     >
                     .Shorty URL
                 </Typography>
