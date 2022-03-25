@@ -52,13 +52,13 @@ export const LinkViews = () => {
             }}
           >
           <Table style={{tableLayout: "auto"}} aria-label="custom table">
-            <TableHead style={{backgroundColor:"#F1F1F1"}}>
-              <TableRow >
-                <TableCell align="left">Original Link (Full Url)</TableCell>
-                <TableCell align="center">Shortened Url</TableCell>
-                <TableCell align="center">Shortened Url Clicks</TableCell>
-                <TableCell align="center">Date Created (UTC)</TableCell>
-                <TableCell align="center">Delete</TableCell>
+            <TableHead>
+              <TableRow style={{backgroundColor:"#434343"}}>
+                <TableCell align="left" style={{color:"#f5f5f5"}}>Original Link (Full Url)</TableCell>
+                <TableCell align="center" style={{color:"#f5f5f5"}}>Shortened Url</TableCell>
+                <TableCell align="center" style={{color:"#f5f5f5"}}>Shortened Url Clicks</TableCell>
+                <TableCell align="center" style={{color:"#f5f5f5"}}>Date Created (UTC)</TableCell>
+                <TableCell align="center" style={{color:"#f5f5f5"}}>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -74,7 +74,7 @@ export const LinkViews = () => {
                   </TableCell>
 
                   <TableCell align="center">
-                    <Button onClick={(e) => handleShortUrlClick(e)} variant="text" value={u.short} sx={{textTransform: "none"}}>
+                    <Button onClick={(e) => handleShortUrlClick(e)} variant="text" value={u.short}>
                       https://{u.short}.shorty
                     </Button>
                   </TableCell>

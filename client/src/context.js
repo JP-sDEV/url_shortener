@@ -1,5 +1,5 @@
 import React, { useState, createContext } from "react";
-
+import { createTheme } from '@mui/material/styles';
 export const AppContext = createContext(null)
 
 export default ({children}) => {
@@ -9,13 +9,22 @@ export default ({children}) => {
     });
 
     const [theme] = useState({
-        fontFamily: 'Courier New',
-        textTransfrom: "none"
+
+        main:createTheme({
+            palette: {
+              primary: {
+                main: "#434343",
+              }
+            },
+            typography: {
+              fontFamily: 'Courier New'
+            }
+          })
     });
 
     const store = {
         state: [state, setState],
-        theme: theme
+        theme: [theme]
     }
 
     return <AppContext.Provider value={store}>{children}</AppContext.Provider>
