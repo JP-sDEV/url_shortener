@@ -1,8 +1,17 @@
+const path = require('path')
+const dotenv = require('dotenv')
 const express = require("express")
 const mongoose = require("mongoose")
 const ShortUrl = require("./models/shortUrl")
+const passport = require("passport")
+const session = require("express-session")
+
+
+dotenv.config({ path: './config/config.env' })
 
 const app = express()
+
+require("./config/passport")(passport)
 
 mongoose.connect("mongodb://localhost/urlShortener", {
     useNewUrlParser: true,
@@ -14,6 +23,23 @@ app.use(express.urlencoded({
 }))
 app.use(express.json());
 
+
+// Auth routes
+app.use('/auth', require("./routes/auth"))
+
+
+// Sessions
+app.use(session({
+    secret: "session_sec",
+    resave: false,
+    saveUninitialized: false
+}))
+
+// Passport middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
+// Url shortener endpoints
 app.get("/home" , (req,res) => {
     res.send({express: "express connected"})
 })
