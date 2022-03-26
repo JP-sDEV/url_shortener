@@ -7,8 +7,13 @@ router.get("/google", passport.authenticate("google", {scope: ["profile"]}))
 
 // Google auth callback
 router.get("/google/callback", passport.authenticate("google", { failureRedirect: "http://localhost:3000/"}), (req, res) =>{
-    console.log("reached google/callback")
     res.redirect('http://localhost:3000/')
+})
+
+// logout user
+router.get("/logout", (req, res) => {
+    req.logout()
+    res.redirect("/")
 })
 
 router.get("/test", (req, res) => {
