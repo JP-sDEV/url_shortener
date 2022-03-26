@@ -10,13 +10,20 @@ function App() {
   const { state: [state, setState], theme:[theme]} = useContext(AppContext)
 
   useEffect(() => {
-    fetch("/allUrls")
-    .then(res => res.json())
-    .then((data) => setState({
-      ...state,
-      data: data.urls
-    }))
-  }, [state.data])
+
+    const fetchUrls = async () => {
+      const res = await fetch("/allUrls")
+      const data = await res.json() 
+      
+      await setState({
+        ...state, 
+        data: data.urls
+      })
+    }
+
+    fetchUrls()
+    
+}, [])
 
   return (
     <div className="App">
