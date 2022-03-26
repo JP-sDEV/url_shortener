@@ -6,7 +6,7 @@ const ShortUrl = require("./models/ShortUrl")
 const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
-
+const cors = require("cors")
 
 dotenv.config({ path: './config/config.env' })
 
@@ -38,6 +38,8 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+// CORS allow all
+app.use(cors())
 
 // Auth routes
 app.use('/auth', require("./routes/auth"))
@@ -48,7 +50,6 @@ app.get("/home" , (req,res) => {
 })
 
 app.get("/allUrls", async(req, res) => {
-    console.log("hello")
     const shortUrls = await ShortUrl.find()
     res.send({
         urls: shortUrls
@@ -56,11 +57,16 @@ app.get("/allUrls", async(req, res) => {
 })
 
 app.post("/shortUrls",  async(req, res) => {
-    console.log(req.user)
-    await ShortUrl.create({
-        full: String(req.body.full),
-        // user: String(req.body.user)
-    })
+    console.log("user: ", req.user)
+    const shortUrl = {
+        full: String(req.body.full)
+    }
+// to do -> check if user is logged in
+    if (req.user) {
+        shortUrl.user = req.user
+    }
+
+    await ShortUrl.create(shortUrl)
 }) 
 
 app.delete("/delUrl", async(req,res) => {
