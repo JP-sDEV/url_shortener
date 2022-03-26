@@ -11,7 +11,29 @@ module.exports = function(passport) {
     },
     
     async (accessToken, refreshToken, profile, done) => {
-        console.log(profile)
+        
+        const newUser = {
+            googleId: profile.id
+        }
+
+        try {
+            let user = await User.findOne({
+                googleId: profile.id,
+                displayName: profile.displayName
+            })
+
+            if (user) {
+                done (null, user)
+            }
+            else {
+                user = await User.create(newUser)
+                done(null, user)
+            }
+        }
+        catch(err) {
+            console.error(err)
+        }
+
     }))
 
     passport.serializeUser((user, done) => {
