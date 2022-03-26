@@ -2,7 +2,7 @@ const path = require('path')
 const dotenv = require('dotenv')
 const express = require("express")
 const mongoose = require("mongoose")
-const ShortUrl = require("./models/shortUrl")
+const ShortUrl = require("./models/ShortUrl")
 const passport = require("passport")
 const session = require("express-session")
 
@@ -52,8 +52,10 @@ app.get("/allUrls", async(req, res) => {
 })
 
 app.post("/shortUrls",  async(req, res) => {
+    console.log(req.user)
     await ShortUrl.create({
-        full: String(req.body.full)
+        full: String(req.body.full),
+        // user: String(req.body.user)
     })
 }) 
 
