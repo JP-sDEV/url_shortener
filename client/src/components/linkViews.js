@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { 
     Table,
     TableBody,
@@ -34,13 +34,18 @@ export const LinkViews = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(delForm)
     }
-    
-    fetch("/delUrl", requestOptions)
-    .then(res => res.json())
-    .catch((err) => {
-      console.log(err)
-    })
+      fetch("/delUrl", requestOptions)
+      .then(res => res.json())
+      .then(data => setState({
+        ...state,
+        data: data.urls
+      }))
+      .catch((err) => {
+        console.log(err)
+      })
   }
+
+
 
     return(
       <div style={{"margin": "1.5rem"}}>
