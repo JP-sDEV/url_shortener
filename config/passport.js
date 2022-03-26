@@ -13,7 +13,8 @@ module.exports = function(passport) {
     async (accessToken, refreshToken, profile, done) => {
         
         const newUser = {
-            googleId: profile.id
+            googleId: profile.id,
+            displayName: profile.displayName
         }
 
         try {
@@ -24,8 +25,7 @@ module.exports = function(passport) {
 
             if (user) {
                 done (null, user)
-            }
-            else {
+            } else {
                 user = await User.create(newUser)
                 done(null, user)
             }
