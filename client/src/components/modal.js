@@ -9,6 +9,14 @@ export const Modal = () => {
         window.open("http://localhost:5000/auth/google", "_self")
       }
 
+    const handleLogout = () => {
+        const logout = async() => {
+            const res = await fetch("/auth/logout")
+            const data = await res.json()
+        }
+
+        logout()
+    }
     return (
         <Container Container
                         component="main"
@@ -31,6 +39,10 @@ export const Modal = () => {
                 {/* test button for OAuth, for dev purposes */}
                 <Button onClick={handleAuthRedirect}>
                     GOOGLE LOGIN
+                </Button>
+
+                <Button onClick={handleLogout}>
+                    LOGOUT
                 </Button>
 
                 <Form />
