@@ -5,9 +5,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    displayName: {
+    firstName: {
         type: String,
-        required: false
+        required: true
     },
     createdAt: {
         type: Date,
