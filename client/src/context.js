@@ -5,7 +5,8 @@ export const AppContext = createContext(null)
 export default ({children}) => {
 
     const [state, setState] = useState({ 
-        data: []
+        data: [], 
+        userId: null
     });
 
     const [theme] = useState({
