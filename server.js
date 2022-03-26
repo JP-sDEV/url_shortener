@@ -48,6 +48,7 @@ app.get("/home" , (req,res) => {
 })
 
 app.get("/allUrls", async(req, res) => {
+    console.log("hello")
     const shortUrls = await ShortUrl.find()
     res.send({
         urls: shortUrls
@@ -69,6 +70,10 @@ app.delete("/delUrl", async(req,res) => {
     }
 
     await ShortUrl.findOneAndRemove(deleteId)
+
+    const shortUrls = await ShortUrl.find()
+
+    res.send({urls: shortUrls})
 }) 
 
 app.get("/:shortUrl", async(req, res) => { 
