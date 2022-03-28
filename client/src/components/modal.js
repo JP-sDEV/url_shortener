@@ -25,8 +25,9 @@ export const Modal = () => {
             <Paper 
                 variant="outlined" 
                 sx={{ 
-                    my: { xs: 3, m: 3 },
-                    p: { xs: 1, m: 3 }
+                    mt: {xs: 0 },
+                    mb: { xs: 1 },
+                    p: { xs: 1 }
                     }}
                 >
                 <Typography 
