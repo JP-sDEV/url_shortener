@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from "react"
 import { ThemeProvider } from '@mui/material/styles';
 import { NavBar } from "./components/navBar";
-import { Modal } from "./components/modal"
-import { LinkViews } from "./components/linkViews"
+import { Modal } from "./components/modal";
+import { LinkViews } from "./components/linkViews";
 import { AppContext } from "./context";
 import './App.css';
 
@@ -12,7 +12,6 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-
       try {
         const res = await fetch("/allUrls")
         const resData = await res.json()
@@ -22,13 +21,10 @@ function App() {
           userId: resData.userId,
           name: resData.name
         })
-
       } catch (error) {
         console.err(error)
       }
-
     }
-
     fetchData()
   }, [])
 

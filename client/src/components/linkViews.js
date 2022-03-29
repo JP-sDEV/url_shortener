@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { 
     Table,
     TableBody,
@@ -7,98 +7,88 @@ import {
     TableHead,
     TableRow,
     Paper,
-    Button
+    Tabs,
+    Tab,
+    Box
  } from '@mui/material';
-
+ 
+ import {CustomRows} from "./customRows"
  import { AppContext } from "../context"
-
 
 export const LinkViews = () => {
 
-  const {state: [state, setState]} = useContext(AppContext)
+  const {state: [state]} = useContext(AppContext)
+  const [viewType, setViewType] = useState("all")
 
-  const handleShortUrlClick = (e) => {
-    fetch(`/${e.target.value}`)
-    .then(res => res.json())
-    .then(data =>  (window.open(data.url, "_blank")))
-  } 
+  const handleChange = (e, newValue) => {
+    setViewType(newValue);
+  };
 
-  const handleDelete = (e) => {
-
-    const delForm = {
-      "id": e.target.value
+  const renderViewType = () => {
+    if (viewType === "all") {
+      return (
+        state.data.map((u) => (
+          <CustomRows 
+            key={u._id}
+            _id={u._id}
+            full={u.full}
+            short={u.short}
+            clicks={u.clicks}
+            created={u.created}
+            user={u.user}/>
+        ))
+      )
+    }
+    else {
+      return (
+      state.data.filter(post => (post.user === state.userId)).map(post => 
+        <CustomRows 
+          key={post._id}
+          _id={post._id}
+          full={post.full}
+          short={post.short}
+          clicks={post.clicks}
+          created={post.created}
+          user={post.user}/>)
+      )}
     }
 
-    const requestOptions = {
-      method: "DELETE",
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(delForm)
-    }
-      fetch("/delUrl", requestOptions)
-      .then(res => res.json())
-      .then(data => setState({
-        ...state,
-        data: data.urls
-      }))
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-
-
-    return(
+    return (
       <div style={{"margin": "1.5rem"}}>
-        <TableContainer 
-          component={Paper}
-          sx={{ 
-            display: "flex",
-            flexDirection: "row",
-            }}
-          >
-          <Table style={{tableLayout: "auto"}} aria-label="custom table">
-            <TableHead>
-              <TableRow style={{backgroundColor:"#434343"}}>
-                <TableCell align="left" style={{color:"#f5f5f5"}}>Original Link (Full Url)</TableCell>
-                <TableCell align="center" style={{color:"#f5f5f5"}}>Shortened Url</TableCell>
-                <TableCell align="center" style={{color:"#f5f5f5"}}>Shortened Url Clicks</TableCell>
-                <TableCell align="center" style={{color:"#f5f5f5"}}>Date Created (UTC)</TableCell>
-                <TableCell align="center" style={{color:"#f5f5f5"}}>Delete</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {state.data.map((u) => (
-                <TableRow
-                  key={u._id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell align="left">
-                    <Button href={u.full} target="_blank">
-                      {u.full}
-                    </Button>
-                  </TableCell>
+        <Box sx={{ width: '100%', bgcolor: 'background.paper' }} fullWidth={true}>
+          <Tabs value={viewType} onChange={handleChange} centered variant="fullWidth">
+            <Tab label="all shortys" value="all"/>
+            {state.userId ? <Tab label={`${state.name}'s shortys`} value="user"/>: ""}
+          </Tabs>
+        </Box>
 
-                  <TableCell align="center">
-                    <Button onClick={(e) => handleShortUrlClick(e)} variant="text" value={u.short}>
-                      https://{u.short}.shorty
-                    </Button>
-                  </TableCell>
+        <Paper sx={{width: "100%"}}>
+          <TableContainer 
+            component={Paper}
+            sx={{ 
+              display: "flex",
+              flexDirection: "row",
+              }} >
 
-                  <TableCell align="center">{u.clicks}</TableCell>
+            <Table style={{tableLayout: "auto"}} aria-label="custom table">
 
-                  <TableCell align="center" >
-                    {u.created.slice(0,10)}
-                  </TableCell>
-
-                  <TableCell align="center" >
-                    <Button onClick={(e) => handleDelete(e)} value={u._id}>🗑️</Button>
-                  </TableCell>
-
+              <TableHead>
+                <TableRow style={{backgroundColor:"#434343"}}>
+                  <TableCell align="left" style={{color:"#f5f5f5"}}>Original Link (Full Url)</TableCell>
+                  <TableCell align="center" style={{color:"#f5f5f5"}}>Shortened Url</TableCell>
+                  <TableCell align="center" style={{color:"#f5f5f5"}}>Shortened Url Clicks</TableCell>
+                  <TableCell align="center" style={{color:"#f5f5f5"}}>Date Created (UTC)</TableCell>
+                  <TableCell align="center" style={{color:"#f5f5f5"}}>Delete</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          </TableContainer>
+              </TableHead>
+
+              <TableBody>
+                {renderViewType()}
+              </TableBody>
+
+            </Table>
+            </TableContainer>
+        </Paper>
       </div>
     )
 }
