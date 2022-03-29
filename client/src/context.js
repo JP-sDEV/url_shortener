@@ -6,7 +6,8 @@ export default ({children}) => {
 
     const [state, setState] = useState({ 
         data: [], 
-        userId: null
+        userId: null,
+        name: null
     });
 
     const [theme] = useState({
