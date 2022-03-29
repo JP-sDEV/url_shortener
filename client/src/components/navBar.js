@@ -7,6 +7,25 @@ export const NavBar = () => {
 
     const {state: [state, setState]} = useContext(AppContext)
 
+    const handleAuthRedirect = () => {
+        window.open("http://localhost:5000/auth/google", "_self")
+      }
+
+    const handleLogout = async () => {
+        const logout = async() => {
+            await fetch("/auth/logout")
+        }
+
+        await logout()
+        await setState({
+            ...state,
+            userId: null,
+            name: null
+        })
+
+        window.location.reload(false)
+    }
+
     return (
         <Box>
         <AppBar position="static" color="transparent" elevation={0}>
@@ -15,15 +34,17 @@ export const NavBar = () => {
                     <img src={GitHubLogo} style={{width: "2rem"}}/>
                 </a>
 
-            {/* puts buttons on each side */}
+            {/* fills the mid part (puts buttons on each side) */}
                 <Typography sx={{ flexGrow: 1 }} />
 
-
                 {
-                    state.userId ? 
-                        <Button color="inherit" sx={{ }}>LOGOUT</Button>
+                    state.userId ?
+                        <div>
+                            <Typography variant="button" sx={{mr: {xs:2}}}>Hi {state.name}</Typography>
+                            <Button variant="outlined" onClick={handleLogout} color="inherit" sx={{ }}>LOGOUT</Button>
+                        </div>
                         :
-                        <Button color="inherit" sx={{ }}>GOOGLE LOGIN</Button>
+                        <Button variant="outlined" onClick={handleAuthRedirect} color="inherit" sx={{ }}>GOOGLE LOGIN</Button>
                 }
             </Toolbar>
         </AppBar>
