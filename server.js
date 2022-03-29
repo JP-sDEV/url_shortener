@@ -50,14 +50,24 @@ app.get("/home" , (req,res) => {
 })
 
 app.get("/allUrls", async(req, res) => {
+
+    const out = {
+        urls: null,
+        userId: null,
+        name: null
+    }
+
+    if (req.user) {
+        out.userId = req.user._id,
+        out.name = req.user.firstName
+    }
+
     const shortUrls = await ShortUrl.find()
-    res.send({
-        urls: shortUrls
-    })
+    out.urls = shortUrls
+    res.send(out)
 })
 
 app.post("/shortUrls",  async(req, res) => {
-    console.log("user: ", req.user)
     const shortUrl = {
         full: String(req.body.full)
     }
