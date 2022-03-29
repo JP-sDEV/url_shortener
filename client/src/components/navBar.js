@@ -30,7 +30,7 @@ export const NavBar = () => {
         <Box>
         <AppBar position="static" color="transparent" elevation={0}>
             <Toolbar>
-                <a href="https://github.com/JP-sDEV/url_shortener" target="_blank">
+                <a href="https://github.com/JP-sDEV/url_shortener" target="_blank" rel="noopener noreferrer">
                     <img src={GitHubLogo} style={{width: "2rem"}}/>
                 </a>
 
