@@ -7,10 +7,10 @@ export const NavBar = () => {
 
     const {state: [state, setState]} = useContext(AppContext)
 
-    const PROD_URL = "https://shorty-urlshort.herokuapp.com/"
+    const PROD_URL = "https://shorty-urlshort.herokuapp.com"
 
     const handleAuthRedirect = () => {
-        window.open(PROD_URL, "_self")
+        window.open(`${PROD_URL}/auth/google`, "_self")
       }
 
     const handleLogout = async () => {
