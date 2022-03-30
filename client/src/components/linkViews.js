@@ -20,6 +20,12 @@ export const LinkViews = () => {
   const {state: [state]} = useContext(AppContext)
   const [viewType, setViewType] = useState("all")
 
+  const tabSx = {
+    '.MuiTabs-indicator': {
+      top: 0
+    }
+  }
+
   const handleChange = (e, newValue) => {
     setViewType(newValue);
   };
@@ -56,9 +62,14 @@ export const LinkViews = () => {
     return (
       <div style={{"margin": "1.5rem"}}>
         <Box sx={{ width: '100%', bgcolor: 'background.paper' }} fullWidth={true}>
-          <Tabs value={viewType} onChange={handleChange} centered variant="fullWidth">
-            <Tab label="all shortys" value="all"/>
-            {state.userId ? <Tab label={`${state.name}'s shortys`} value="user"/>: ""}
+          <Tabs value={viewType} onChange={handleChange} centered variant="fullWidth" sx={tabSx}>
+            <Tab label="all shortys" value="all"  sx={tabSx}/>
+            
+            {state.userId 
+              ? 
+              <Tab label={`${state.name}'s shortys`} value="user"/>: ""
+            }
+
           </Tabs>
         </Box>
 
