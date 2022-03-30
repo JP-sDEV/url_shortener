@@ -1,22 +1,27 @@
-const path = require('path')
+const path = require('path') 
 const dotenv = require('dotenv')
 const express = require("express")
+const connectDB = require("./config/db")
 const mongoose = require("mongoose")
 const ShortUrl = require("./models/ShortUrl")
 const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
-dotenv.config({ path: './config/config.env' })
+dotenv.config({ path: './config/config.env' }) 
 
 // Init App + DB Connection
 const app = express()
-require("./config/passport")(passport)
+require("./config/passport")(passport) 
 
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+// MongoDB Atlas (cloud)
+connectDB() 
+
+// MongoDB Local
+// mongoose.connect(process.env.LOCALHOST, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// })
 
 // Middleware
 // Request info
@@ -31,7 +36,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI
+        mongoUrl: process.env.MONGODB_URI 
     })
 }))
 
@@ -55,9 +60,9 @@ app.get("/allUrls", async(req, res) => {
         name: null
     }
 
-    if (req.user) {
+    if (req.user) { 
         out.userId = req.user._id,
-        out.name = req.user.firstName
+        out.name = req.user.firstName 
     }
 
     const shortUrls = await ShortUrl.find()
@@ -67,7 +72,7 @@ app.get("/allUrls", async(req, res) => {
 
 // @desc Process user submitted link
 // @route POST /shortUrls 
-app.post("/shortUrls",  async(req, res) => {
+app.post("/shortUrls",  async(req, res) => { 
 
     try {
         const shortUrl = {
