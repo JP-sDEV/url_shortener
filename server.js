@@ -7,11 +7,10 @@ const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
-
 dotenv.config({ path: './config/config.env' })
 
+// Init App + DB Connection
 const app = express()
-
 require("./config/passport")(passport)
 
 mongoose.connect(process.env.MONGODB_URI, {
@@ -19,12 +18,14 @@ mongoose.connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true
 })
 
+// Middleware
+// Request info
 app.use(express.urlencoded({
     extended: true
 }))
 app.use(express.json());
 
-// Sessions
+// Cookies
 app.use(session({
     secret: "session_sec",
     resave: false,
@@ -34,21 +35,18 @@ app.use(session({
     })
 }))
 
-// Passport middleware
+// Passport
 app.use(passport.initialize())
 app.use(passport.session())
 
-// CORS allow all
+// CORS
 app.use(cors())
 
 // Auth routes
 app.use('/auth', require("./routes/auth"))
 
-// Url shortener endpoints
-app.get("/home" , (req,res) => {
-    res.send({express: "express connected"})
-})
-
+// @desc Gets all URLs, and checks if user is logged in
+// @route GET /allUrls
 app.get("/allUrls", async(req, res) => {
 
     const out = {
@@ -67,41 +65,70 @@ app.get("/allUrls", async(req, res) => {
     res.send(out)
 })
 
+// @desc Process user submitted link
+// @route POST /shortUrls 
 app.post("/shortUrls",  async(req, res) => {
-    const shortUrl = {
-        full: String(req.body.full)
-    }
-// to do -> check if user is logged in
-    if (req.user) {
-        shortUrl.user = req.user
-    }
 
-    await ShortUrl.create(shortUrl)
+    try {
+        const shortUrl = {
+            full: String(req.body.full)
+        }
+        
+        if (req.user) {
+            shortUrl.user = req.user
+        }
+    
+        await ShortUrl.create(shortUrl)
+    
+    } catch(err) {
+        console.error(err)
+        res.render('error/500')
+    }
+    
 }) 
 
+// @desc Delete user post
+// @route DELETE /delUrl
 app.delete("/delUrl", async(req,res) => {
 
-    const deleteId = {
-        _id: req.body.id
+    try {
+        const deleteId = {
+            _id: req.body.id
+        }
+    
+        await ShortUrl.findOneAndRemove(deleteId)
+    
+        const shortUrls = await ShortUrl.find()
+    
+        res.send({urls: shortUrls})
+    
+    } catch(err) {
+        console.error(err)
+        res.render('error/500')
     }
 
-    await ShortUrl.findOneAndRemove(deleteId)
-
-    const shortUrls = await ShortUrl.find()
-
-    res.send({urls: shortUrls})
 }) 
 
+// @desc Open the shortened link, counting the number of clicks
+// @route GET /:shortUrl
 app.get("/:shortUrl", async(req, res) => { 
-    const shortUrl = await ShortUrl.findOne({ 
-        short: req.params.shortUrl
-    })
 
-    if (shortUrl == null) return res.sendStatus(404)
+    try {
+        const shortUrl = await ShortUrl.findOne({ 
+            short: req.params.shortUrl
+        })
+    
+        if (shortUrl == null) return res.sendStatus(404)
+    
+        shortUrl.clicks++
+        shortUrl.save()
+        res.send({url: shortUrl.full})
+    
+    } catch(err) {
+        console.error(err)
+        res.render('error/500')
+    } 
 
-    shortUrl.clicks++
-    shortUrl.save()
-    res.send({url: shortUrl.full})
 })
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is up"))
