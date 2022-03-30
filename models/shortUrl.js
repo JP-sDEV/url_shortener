@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const shortId = require("shortid")
 
 const ShortUrlSchema = new mongoose.Schema({
-    full: {
+    full: { 
         type: String,
         required: true
     },
