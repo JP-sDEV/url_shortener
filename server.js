@@ -148,4 +148,4 @@ if (process.env.NODE_ENV === "production") {
     })
 }
 
-app.listen(process.env.PORT || 5000, () => console.log("Server is up"))
+app.listen(process.env.PORT || 5000, () => console.log("Server is up")) 
