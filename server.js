@@ -87,7 +87,7 @@ app.post("/shortUrls",  async(req, res) => {
     
     } catch(err) {
         console.error(err)
-        res.render('error/500')
+        res.send({"msg":'error/500'})
     }
     
 }) 
@@ -109,33 +109,52 @@ app.delete("/delUrl", async(req,res) => {
     
     } catch(err) {
         console.error(err)
-        res.render('error/500')
+        res.send({"msg":'error/500'})
     }
 
 }) 
 
-// @desc Open the shortened link, counting the number of clicks
+// @desc Open the shortened link (from client), counting the number of clicks
 // @route GET /:shortUrl
 app.get("/:shortUrl", async(req, res) => { 
-
     try {
         const shortUrl = await ShortUrl.findOne({ 
             short: req.params.shortUrl
         })
     
-        if (shortUrl == null) return res.sendStatus(404)
-    
+        if (shortUrl === null) return res.sendStatus(404)
+
         shortUrl.clicks++
         shortUrl.save()
         res.send({url: shortUrl.full})
     
     } catch(err) {
         console.error(err)
-        res.render('error/500')
+        res.send({"msg":'error/500'})
     } 
 
 })
 
+// @desc Open the shortened link (not from client), counting the number of clicks
+// @route GET /:shortUrl
+app.get("/get/:shortUrl", async(req, res) => { 
+    try {
+        const shortUrl = await ShortUrl.findOne({ 
+            short: req.params.shortUrl
+        })
+    
+        if (shortUrl === null) return res.sendStatus(404)
+        
+        shortUrl.clicks++
+        shortUrl.save()
+        res.redirect(shortUrl.full)
+    
+    } catch(err) {
+        console.error(err)
+        res.send({"msg":'error/500'})
+    } 
+
+})
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
