@@ -10,9 +10,6 @@ Contents
   - [Why?](#why)
   - [Tech Used/Prerequisites](#tech-used)
   - [Installation (to run locally)](#installation-to-run-locally)
-  - [Features](#features)
-    - [Algorithms](#algorithms)
-    - [Animation Speed](#animation-speed)
   - [Want to Contribute?](#want-to-contribute)
 
 ## Why? 
@@ -37,8 +34,6 @@ Contents
 3. install client dependencies ` cd client npm install`
 
 4. Run app locally with `npm run dev` from the root folder
-
-## Features
 
 ## Want to Contribute?
 1. Clone the repo by following [Installation](#Installation)
