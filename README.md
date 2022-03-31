@@ -1,4 +1,4 @@
-![banner_image](README_imgs/banner.png)
+![banner_image](README_imgs/banner.PNG)
 
 # .Shorty URL (URL Shortener)
 Shorten your URLs, and keep track of the amount of clicks of YOUR link!
