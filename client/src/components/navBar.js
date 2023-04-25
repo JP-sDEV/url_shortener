@@ -10,8 +10,9 @@ export const NavBar = () => {
     const PROD_URL = "https://shorty-urlshort.herokuapp.com"
 
     const handleAuthRedirect = () => {
-        window.open(`${PROD_URL}/auth/google`, "_self")
-      }
+        // window.open(`${PROD_URL}/auth/google`, "_self")
+        window.open(`http://localhost:5000/auth/google`, "_self")
+    }
 
     const handleLogout = async () => {
         const logout = async() => {

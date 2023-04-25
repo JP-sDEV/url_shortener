@@ -11,7 +11,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
 router.get("/google/callback", passport.authenticate("google",
     {
         failureRedirect: "/login/fail",
-        successRedirect: "https://shorty-urlshort.herokuapp.com/"
+        successRedirect: "http://localhost:3000/"
     }
 ))
 
