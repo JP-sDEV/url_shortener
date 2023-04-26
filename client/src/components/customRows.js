@@ -13,7 +13,7 @@ import { AppContext } from "../context"
       } 
 
     const handleCopyToClipBoard = async(e) => {
-      await navigator.clipboard.writeText(`${process.env.PROD_URL}/get/${e.target.value}`);
+      await navigator.clipboard.writeText(`${process.env.SERVER_URL}/get/${e.target.value}`);
       alert(".Shorty Copied!");
     }
 
