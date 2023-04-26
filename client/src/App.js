@@ -22,7 +22,7 @@ function App() {
           name: resData.name
         })
       } catch (error) {
-        console.err(error)
+        console.error(error)
       }
     }
     fetchData()
