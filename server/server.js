@@ -47,6 +47,13 @@ app.use(passport.session())
 // CORS
 app.use(cors())
 
+app.get("/testConnection", async (req, res) => {
+    return res.status(200).json({
+      title: "Express Testing",
+      message: "The app is working properly!",
+    });
+  });
+
 // Auth routes
 app.use('/auth', require("./routes/auth"))
 
