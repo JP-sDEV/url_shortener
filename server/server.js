@@ -1,18 +1,18 @@
 const path = require('path') 
 const dotenv = require('dotenv')
 const express = require("express")
-const connectDB = require("../config/db")
+const connectDB = require("./config/db")
 const mongoose = require("mongoose")
-const ShortUrl = require("../models/ShortUrl")
+const ShortUrl = require("./models/ShortUrl")
 const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
-dotenv.config({ path: './config/config.env' }) 
+dotenv.config({ path: '../config.env' }) 
 
 // Init App + DB Connection
 const app = express()
-require("../config/passport")(passport) 
+require("./config/passport")(passport) 
 
 // MongoDB Atlas (cloud)
 connectDB() 

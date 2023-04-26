@@ -2,7 +2,7 @@
   "name": "url_shortner",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "engines": {
     "node": "18.x"
   },
