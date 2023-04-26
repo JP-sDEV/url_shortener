@@ -12,6 +12,7 @@
         "dest": "/"
       }
     ],
+    
     "headers": [
       {
         "source": "/api/(.*)",
