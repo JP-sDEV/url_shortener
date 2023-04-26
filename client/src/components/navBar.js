@@ -8,7 +8,7 @@ export const NavBar = () => {
     const {state: [state, setState]} = useContext(AppContext)
 
     const handleAuthRedirect = () => {
-        window.open(`${process.env.SERVER_URL}/auth/google`, "_self")
+        window.open(`${process.env.REACT_APP_SERVER_URL}/auth/google`, "_self")
     }
 
     const handleLogout = async () => {
