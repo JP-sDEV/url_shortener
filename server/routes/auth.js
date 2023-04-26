@@ -11,7 +11,8 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
 router.get("/google/callback", passport.authenticate("google",
     {
         failureRedirect: "/login/fail",
-        successRedirect: "http://localhost:3000/"
+        // successRedirect: "http://localhost:3000/"
+        successRedirect: "https://url-shortener-client-one.vercel.app/"        
     }
 ))
 
