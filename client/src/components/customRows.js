@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
 import { TableCell, TableRow, Button } from '@mui/material';
- import { AppContext } from "../context"
+import { AppContext } from "../context"
 
  export const CustomRows = ({_id, full, short, clicks, created}) => {
      
     const {state: [state, setState]} = useContext(AppContext)
-
-    const PROD_URL = "https://shorty-urlshort.herokuapp.com"
 
     const handleShortUrlClick = (e) => {
         fetch(`/${e.target.value}`)
@@ -15,7 +13,7 @@ import { TableCell, TableRow, Button } from '@mui/material';
       } 
 
     const handleCopyToClipBoard = async(e) => {
-      await navigator.clipboard.writeText(`${PROD_URL}/get/${e.target.value}`);
+      await navigator.clipboard.writeText(`${process.env.PROD_URL}/get/${e.target.value}`);
       alert(".Shorty Copied!");
     }
 
