@@ -8,11 +8,12 @@ const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
-// dotenv.config({ path: '../config.env' }) 
+dotenv.config({ path: '.env' }) 
 
 // Init App + DB Connection
 const app = express()
 require("./config/passport")(passport) 
+
 
 // MongoDB Atlas (cloud)
 connectDB() 
