@@ -1,9 +1,6 @@
 const express = require("express")
 const passport = require("passport")
 const router = express.Router()
-// const dotenv = require('dotenv')
-
-// dotenv.config({ path: '.env' }) 
 
 // @desc Auth with Google
 // @route /auth/google
@@ -14,7 +11,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
 router.get("/google/callback", passport.authenticate("google",
     {
         failureRedirect: "/login/fail",
-        successRedirect: process.env.CLIENT_URL      
+        successRedirect: "https://www.youtube.com/" 
     }
 ))
 
