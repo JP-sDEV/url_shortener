@@ -9,15 +9,14 @@ import './App.css';
 function App() {
 
   const { state: [state, setState], theme: [theme] } = useContext(AppContext)
-  console.log(state)
   useEffect(() => {
     const fetchData = async () => {
-      
+      console.log(process.env.REACT_APP_SERVER_URL);
       try {
         // const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
         const res = await fetch("/allUrls")
         const resData = await res.json()
-        console.log(res.userID);
+        console.log("ResData: ", resData);
         await setState({
           ...state, 
           data: resData.urls,
