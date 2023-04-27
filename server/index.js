@@ -8,21 +8,13 @@ const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
-// dotenv.config({ path: '.env' }) 
 
 // Init App + DB Connection
 const app = express()
 require("./config/passport")(passport) 
 
-
 // MongoDB Atlas (cloud)
 connectDB() 
-
-// MongoDB Local
-// mongoose.connect(process.env.LOCALHOST, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// })
 
 // Middleware
 // Request info
