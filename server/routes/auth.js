@@ -3,7 +3,7 @@ const passport = require("passport")
 const router = express.Router()
 const dotenv = require('dotenv')
 
-dotenv.config({ path: '.env' }) 
+dotenv.config({ path: '../env' }) 
 
 console.log(process.env.CLIENT_URL);
 // @desc Auth with Google
@@ -16,7 +16,6 @@ router.get("/google/callback", passport.authenticate("google",
     {
         failureRedirect: "/login/fail",
         successRedirect: "http://localhost:3000/"
-        // successRedirect: process.env.CLIENT_URL      
     }
 ))
 
