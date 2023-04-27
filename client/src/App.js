@@ -7,7 +7,7 @@ import { AppContext } from "./context";
 import './App.css';
 
 function App() {
-  // console.log(process.env.REACT_APP_TEST);
+
   const { state: [state, setState], theme: [theme] } = useContext(AppContext)
 
   useEffect(() => {
@@ -17,6 +17,7 @@ function App() {
         const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
         // const res = await fetch("/allUrls")
         const resData = await res.json()
+        console.log(res);
         await setState({
           ...state, 
           data: resData.urls,
