@@ -18,9 +18,9 @@ function App() {
         const resData = await res.json()
         await setState({
           ...state, 
-          data: resData.urls,
-          userId: resData.userId,
-          name: resData.name
+          data: resData.urls || [],
+          userId: resData.userId || "",
+          name: resData.name|| ""
         })
       } catch (error) {
         console.error(error)
