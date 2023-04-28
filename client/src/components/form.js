@@ -28,8 +28,14 @@ export const Form = () => {
             body: JSON.stringify(urlForm)
         }
 
-        await fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
-        .then(res => res.json())
+        try {
+            await fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
+        }
+        catch(err)
+        {
+            console.error(err);
+        }
+
 
     }
     
