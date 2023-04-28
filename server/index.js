@@ -38,12 +38,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // CORS
-app.use(cors(
-    {
-        origin: process.env.CLIENT_URL,
-        optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) 
-    }
-))
+app.use(cors());
 
 app.get("/testConnection", async (req, res) => {
     return res.status(200).json({
