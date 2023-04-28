@@ -28,7 +28,7 @@ export const Form = () => {
             body: JSON.stringify(urlForm)
         }
 
-        fetch("/shortUrls", requestOptions)
+        fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
         .then(res => res.json())
     }
     

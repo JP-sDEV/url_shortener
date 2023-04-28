@@ -9,7 +9,6 @@ export const NavBar = () => {
 
     const handleAuthRedirect = () => {
         window.open(`${process.env.REACT_APP_SERVER_URL}/auth/google`, "_self")
-        // window.open(`http://localhost:5000/auth/google`, "_self")
     }
 
     const handleLogout = async () => {
