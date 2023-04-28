@@ -29,7 +29,8 @@ export const Form = () => {
         }
 
         try {
-            await fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
+            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
+            const data = await res.json();
         }
         catch(err)
         {
