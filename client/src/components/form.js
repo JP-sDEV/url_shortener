@@ -16,7 +16,7 @@ export const Form = () => {
         })
     }
 
-    const handleSubmit  = () => {
+    const handleSubmit  = async () => {
 
         const urlForm = {
             "full": formData.fullUrl
@@ -28,8 +28,9 @@ export const Form = () => {
             body: JSON.stringify(urlForm)
         }
 
-        fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
+        await fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
         .then(res => res.json())
+
     }
     
     return (
