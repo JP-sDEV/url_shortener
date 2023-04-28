@@ -40,7 +40,7 @@ app.use(passport.session())
 // CORS
 app.use(cors(
     {
-        origin: process.env.SERVER_URL,
+        origin: process.env.CLIENT_URL,
         optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) 
     }
 ))
