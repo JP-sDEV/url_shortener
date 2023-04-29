@@ -16,7 +16,7 @@ export const Form = () => {
         })
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
 
         const urlForm = {
             "full": formData.fullUrl
@@ -25,19 +25,17 @@ export const Form = () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(urlForm)
+            body: await JSON.stringify(urlForm)
         }
 
         try {
-            fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
+            await fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
             .then(() => console.log("URL Shortened!"));
         }
         catch(err)
         {
             console.error(err);
         }
-
-
     }
     
     return (
