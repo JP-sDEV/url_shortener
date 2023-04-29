@@ -145,7 +145,7 @@ app.get("/:shortUrl", async(req, res) => {
 
         shortUrl.clicks++
         shortUrl.save()
-        return res.sendStatus(201).send({url: shortUrl.full})
+        return res.status(201).send({url: shortUrl.full})
     
     } catch(err) {
         console.error(err)
@@ -166,7 +166,7 @@ app.get("/get/:shortUrl", async(req, res) => {
         
         shortUrl.clicks++
         shortUrl.save()
-        return res.sendStatus(201).redirect(shortUrl.full)
+        return res.status(201).redirect(shortUrl.full)
     
     } catch(err) {
         console.error(err)
@@ -176,14 +176,14 @@ app.get("/get/:shortUrl", async(req, res) => {
 })
 
 // Serve static assets if in production
-if (process.env.NODE_ENV === "production") {
+// if (process.env.NODE_ENV === "production") {
     
-    // Use static folder
-    app.use(express.static('client/build'))
+//     // Use static folder
+//     app.use(express.static('client/build'))
 
-    app.get("*", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-    })
-}
+//     app.get("*", (req, res) => {
+//         res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+//     })
+// }
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is up")) 
