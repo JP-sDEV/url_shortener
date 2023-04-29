@@ -8,6 +8,7 @@ const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
+const e = require('express')
 
 // Init App + DB Connection
 const app = express()
@@ -60,14 +61,31 @@ app.get("/allUrls", async(req, res) => {
         name: null
     }
 
-    if (req.user) { 
-        out.userId = req.user._id,
-        out.name = req.user.firstName 
+    try
+    {
+        if (req.user) { 
+            out.userId = req.user._id,
+            out.name = req.user.firstName 
+        }
+    
+        const shortUrls = await ShortUrl.find()
+    
+        if (shortUrls)
+        {
+            out.urls = shortUrls
+            res.status(201).send(out)    
+        }
+        else 
+        {
+            res.status(500);
+        }    
+    }
+    catch(err)
+    {
+        console.error(err);
+        res.status(500);
     }
 
-    const shortUrls = await ShortUrl.find()
-    out.urls = shortUrls
-    res.send(out)
 })
 
 // @desc Process user submitted link
@@ -83,11 +101,21 @@ app.post("/shortUrls",  async(req, res) => {
             shortUrl.user = req.user
         }
     
-        await ShortUrl.create(shortUrl)
+        const response = await ShortUrl.create(shortUrl);
+
+        if (response)
+        {
+            res.sendStatus(201);
+        }
+        else
+        {
+            res.sendStatus(500);
+        }
+
     
     } catch(err) {
         console.error(err)
-        res.send({"msg":'error/500'})
+        res.sendStatus(500);
     }
     
 }) 
@@ -105,11 +133,21 @@ app.delete("/delUrl", async(req,res) => {
     
         const shortUrls = await ShortUrl.find()
     
-        res.send({urls: shortUrls})
+        const response = res.send({urls: shortUrls})
+
+        if (response)
+        {
+            res.sendStatus(201);
+        }
+        else
+        {
+            res.sendStatus(500);
+
+        }
     
     } catch(err) {
         console.error(err)
-        res.send({"msg":'error/500'})
+        res.sendStatus(500);
     }
 
 }) 
@@ -126,11 +164,11 @@ app.get("/:shortUrl", async(req, res) => {
 
         shortUrl.clicks++
         shortUrl.save()
-        res.send({url: shortUrl.full})
+        res.sendStatus(201).send({url: shortUrl.full})
     
     } catch(err) {
         console.error(err)
-        res.send({"msg":'error/500'})
+        res.sendStatus(500)
     } 
 
 })
@@ -147,11 +185,11 @@ app.get("/get/:shortUrl", async(req, res) => {
         
         shortUrl.clicks++
         shortUrl.save()
-        res.redirect(shortUrl.full)
+        res.sendStatus(201).redirect(shortUrl.full)
     
     } catch(err) {
         console.error(err)
-        res.send({"msg":'error/500'})
+        res.sendStatus(500)
     } 
 
 })
