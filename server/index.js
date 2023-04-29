@@ -73,17 +73,17 @@ app.get("/allUrls", async(req, res) => {
         if (shortUrls)
         {
             out.urls = shortUrls
-            res.status(201).send(out)    
+            return res.status(201).send(out)    
         }
         else 
         {
-            res.status(500);
+            return res.status(500);
         }    
     }
     catch(err)
     {
         console.error(err);
-        res.status(500);
+        return res.status(500);
     }
 
 })
@@ -105,17 +105,17 @@ app.post("/shortUrls",  async(req, res) => {
 
         if (response)
         {
-            res.sendStatus(201);
+            return res.sendStatus(201);
         }
         else
         {
-            res.sendStatus(500);
+            return res.sendStatus(500);
         }
 
     
     } catch(err) {
         console.error(err)
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
     
 }) 
@@ -133,11 +133,11 @@ app.delete("/delUrl", async(req,res) => {
     
         const shortUrls = await ShortUrl.find()
 
-        res.sendStatus(201).send({urls: shortUrls})
+        return res.sendStatus(201).send({urls: shortUrls})
     
     } catch(err) {
         console.error(err)
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 
 }) 
@@ -154,11 +154,11 @@ app.get("/:shortUrl", async(req, res) => {
 
         shortUrl.clicks++
         shortUrl.save()
-        res.sendStatus(201).send({url: shortUrl.full})
+        return res.sendStatus(201).send({url: shortUrl.full})
     
     } catch(err) {
         console.error(err)
-        res.sendStatus(500)
+        return res.sendStatus(500)
     } 
 
 })
@@ -175,11 +175,11 @@ app.get("/get/:shortUrl", async(req, res) => {
         
         shortUrl.clicks++
         shortUrl.save()
-        res.sendStatus(201).redirect(shortUrl.full)
+        return res.sendStatus(201).redirect(shortUrl.full)
     
     } catch(err) {
         console.error(err)
-        res.sendStatus(500)
+        return res.sendStatus(500)
     } 
 
 })
