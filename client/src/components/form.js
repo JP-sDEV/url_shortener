@@ -16,21 +16,23 @@ export const Form = () => {
         })
     }
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
         const urlForm = {
             "full": formData.fullUrl
         }
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            mode: 'cors',
             body: JSON.stringify(urlForm)
         }
 
         try {
             fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
-            .then(res => res.json());
+            .then(() => console.log("URL Shortened!"));
         }
         catch(err)
         {

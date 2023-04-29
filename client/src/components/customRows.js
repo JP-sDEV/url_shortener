@@ -25,7 +25,7 @@ import { AppContext } from "../context"
     
       const requestOptions = {
         method: "DELETE",
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: JSON.stringify(delForm)
       }
         fetch(`${process.env.REACT_APP_SERVER_URL}/delUrl`, requestOptions)
@@ -34,6 +34,7 @@ import { AppContext } from "../context"
           ...state,
           data: data.urls
         }))
+        .then(() => console.log("Shorty Deleted!"))
         .catch((err) => {
           console.error(err)
         })
