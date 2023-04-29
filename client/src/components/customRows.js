@@ -7,7 +7,7 @@ import { AppContext } from "../context"
     const {state: [state, setState]} = useContext(AppContext)
 
     const handleShortUrlClick = (e) => {
-        fetch(`/${e.target.value}`)
+        fetch(`${process.env.REACT_APP_SERVER_URL}/${e.target.value}`)
         .then(res => res.json())
         .then(data =>  (window.open(data.url, "_blank")))
       } 
