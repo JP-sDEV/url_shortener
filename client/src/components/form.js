@@ -16,9 +16,8 @@ export const Form = () => {
         })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
+    const handleSubmit = () => {
+
         const urlForm = {
             "full": formData.fullUrl
         }
