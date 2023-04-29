@@ -4,7 +4,7 @@ import { TextField, Button, FormControl } from '@mui/material';
 export const Form = () => {
 
     const [formData, setFormData] = useState({
-        fullUrl: null,
+        fullUrl: "",
         submitBlock: true
     })
 
@@ -16,7 +16,9 @@ export const Form = () => {
         })
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
 
         const urlForm = {
             "full": formData.fullUrl
@@ -24,13 +26,22 @@ export const Form = () => {
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: 
+            { 
+                'Content-Type': 'application/json',
+                'Content-Length': JSON.stringify(urlForm).length.toString()
+            },
             body: await JSON.stringify(urlForm)
         }
 
         try {
-            await fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
-            .then(() => console.log("URL Shortened!"));
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
+            
+            if (!response.ok)
+            {
+                throw new Error("Network response was not 'ok'")
+            }
+            console.log("Url Shortened!")
         }
         catch(err)
         {
@@ -61,7 +72,7 @@ export const Form = () => {
 
                     <Button 
                         variant="outlined"
-                        type="submit"
+                        type="button"
                         sx={{ 
                             ml: "1%"
                             }}
