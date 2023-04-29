@@ -65,14 +65,14 @@ export const Form = () => {
                         required
                         label="Full Url"
                         size="normal"
-                        value = {formData.shortUrl}
+                        value = {formData.fullUrl}
                         fullWidth
                         onChange = {(e) => handleTextInput(e)}
                     />
 
                     <Button 
                         variant="outlined"
-                        type="button"
+                        type="submit"
                         sx={{ 
                             ml: "1%"
                             }}
