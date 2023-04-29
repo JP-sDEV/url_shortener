@@ -145,7 +145,7 @@ app.get("/:shortUrl", async(req, res) => {
 
         shortUrl.clicks++
         shortUrl.save()
-        return res.status(201).send({url: shortUrl.full})
+        return res.status(302).send({url: shortUrl.full})
     
     } catch(err) {
         console.error(err)
@@ -166,7 +166,7 @@ app.get("/get/:shortUrl", async(req, res) => {
         
         shortUrl.clicks++
         shortUrl.save()
-        return res.status(201).redirect(shortUrl.full)
+        return res.redirect(302, shortUrl.full)
     
     } catch(err) {
         console.error(err)
