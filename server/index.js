@@ -124,7 +124,7 @@ app.delete("/delUrl", async(req,res) => {
     
         const shortUrls = await ShortUrl.find()
 
-        return res.sendStatus(201).send({urls: shortUrls})
+        return res.status(201).send({urls: shortUrls})
     
     } catch(err) {
         console.error(err)
