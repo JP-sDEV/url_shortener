@@ -75,10 +75,6 @@ app.get("/allUrls", async(req, res) => {
             out.urls = shortUrls
             return res.status(201).send(out)    
         }
-        else 
-        {
-            return res.status(500);
-        }    
     }
     catch(err)
     {
@@ -107,11 +103,6 @@ app.post("/shortUrls",  async(req, res) => {
         {
             return res.sendStatus(201);
         }
-        else
-        {
-            return res.sendStatus(500);
-        }
-
     
     } catch(err) {
         console.error(err)
