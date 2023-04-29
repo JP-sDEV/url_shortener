@@ -25,7 +25,7 @@ import { AppContext } from "../context"
     
       const requestOptions = {
         method: "DELETE",
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(delForm)
       }
         fetch(`${process.env.REACT_APP_SERVER_URL}/delUrl`, requestOptions)

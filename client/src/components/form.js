@@ -24,7 +24,7 @@ export const Form = () => {
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
             body: JSON.stringify(urlForm)
         }
