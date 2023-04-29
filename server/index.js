@@ -133,16 +133,7 @@ app.delete("/delUrl", async(req,res) => {
     
         const shortUrls = await ShortUrl.find()
 
-
-        if (shortUrls)
-        {
-            res.sendStatus(201).send({urls: shortUrls})
-        }
-        else
-        {
-            res.sendStatus(500);
-
-        }
+        res.sendStatus(201).send({urls: shortUrls})
     
     } catch(err) {
         console.error(err)
