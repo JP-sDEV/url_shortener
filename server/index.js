@@ -69,12 +69,9 @@ app.get("/allUrls", async(req, res) => {
         }
     
         const shortUrls = await ShortUrl.find()
-    
-        if (shortUrls)
-        {
-            out.urls = shortUrls
-            return res.status(201).send(out)    
-        }
+
+        out.urls = shortUrls || []
+        return res.status(201).send(out)    
     }
     catch(err)
     {
