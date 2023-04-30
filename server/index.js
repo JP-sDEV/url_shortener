@@ -5,6 +5,7 @@ const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
+require("./config/passport")(passport) 
 
 // Init App + DB Connection
 const app = express()
@@ -14,26 +15,23 @@ connectDB()
 
 // Middleware
 // Request info
-app.use(express.urlencoded({
-    extended: true
-}))
 app.use(express.json());
+app.use(express.urlencoded({extended: true}))
+
+// CORS
+app.use(cors());
 
 // Cookies
 app.use(session({
     secret: "session_sec",
-    resave: false,
+    resave: true,
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI 
     })
 }))
 
-// CORS
-app.use(cors());
-
 // Passport
-require("./config/passport")(passport) 
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -60,6 +58,8 @@ app.get("/allUrls", async(req, res) => {
 
     try
     {
+        console.log("req: ", req)
+
         console.log("req.user: ", req.user)
         if (req.user) { 
             out.userId = req.user._id,
