@@ -1,18 +1,14 @@
-const path = require('path') 
-const dotenv = require('dotenv')
 const express = require("express")
 const connectDB = require("./config/db")
-const mongoose = require("mongoose")
 const ShortUrl = require("./models/ShortUrl")
 const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
-const e = require('express')
 
 // Init App + DB Connection
 const app = express()
-require("./config/passport")(passport) 
+require("./config/passport")
 
 // MongoDB Atlas (cloud)
 connectDB() 
@@ -99,7 +95,7 @@ app.post("/shortUrls",  async(req, res) => {
         if (response)
         {
             const shortUrls = await ShortUrl.find()
-            
+
             return res.status(201).send({urls: shortUrls})
         }
     
