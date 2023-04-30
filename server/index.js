@@ -60,6 +60,7 @@ app.get("/allUrls", async(req, res) => {
 
     try
     {
+        console.log("req.user: ", req.user)
         if (req.user) { 
             out.userId = req.user._id,
             out.name = req.user.firstName 
