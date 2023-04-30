@@ -12,8 +12,8 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
-        // const res = await fetch("/allUrls")
+        // const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
+        const res = await fetch("/allUrls")
         const resData = await res.json()
         console.log("ResData: ", resData);
         await setState({

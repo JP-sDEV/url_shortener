@@ -10,13 +10,14 @@ dotenv.config({ path: '../env' })
 router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
 
 // @desc Google auth callback
-// @route /auth/google/callback
+// @route /auth/google/callback 
 router.get("/google/callback", passport.authenticate("google",
     {
         failureRedirect: "/login/fail",
         successRedirect: "http://localhost:3000/"
     }
 ))
+  
 
 // @desc Google auth logout
 // @route /auth/logout
@@ -28,6 +29,7 @@ router.get("/logout", (req, res) => {
 // @desc Failed Google login
 // @route /auth/login/fail
 router.get("/login/fail", (req, res) => {
+    console.log("fail")
     if (req.user) {
         res.status(401).json({
             success: true,
