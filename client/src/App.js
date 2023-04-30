@@ -28,7 +28,7 @@ function App() {
       }
     }
     fetchData()
-  }, [])
+  }, [setState, state])
 
   return (
     <div className="App">
