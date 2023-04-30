@@ -5,7 +5,6 @@ const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
-require("./config/passport")(passport) 
 
 // Init App + DB Connection
 const app = express()
@@ -35,6 +34,8 @@ app.use(session({
 // Passport
 app.use(passport.initialize())
 app.use(passport.session())
+require("./config/passport")(passport) 
+
 
 // Auth routes
 app.use('/auth', require("./routes/auth"))
