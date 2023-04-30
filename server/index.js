@@ -8,7 +8,6 @@ const cors = require("cors")
 
 // Init App + DB Connection
 const app = express()
-require("./config/passport")(passport) 
 
 // MongoDB Atlas (cloud)
 connectDB() 
@@ -30,22 +29,24 @@ app.use(session({
     })
 }))
 
-// Passport
-app.use(passport.initialize())
-app.use(passport.session())
-
 // CORS
 app.use(cors());
 
+// Passport
+require("./config/passport")(passport) 
+app.use(passport.initialize())
+app.use(passport.session())
+
+// Auth routes
+app.use('/auth', require("./routes/auth"))
+
+// Test Connection
 app.get("/testConnection", async (req, res) => {
     return res.status(200).json({
       title: "Express Testing",
       message: "The app is working properly!",
     });
   });
-
-// Auth routes
-app.use('/auth', require("./routes/auth"))
 
 // @desc Gets all URLs, and checks if user is logged in
 // @route GET /allUrls
