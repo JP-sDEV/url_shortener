@@ -8,7 +8,7 @@ const cors = require("cors")
 
 // Init App + DB Connection
 const app = express()
-require("./config/passport")
+require("./config/passport")(passport) 
 
 // MongoDB Atlas (cloud)
 connectDB() 
