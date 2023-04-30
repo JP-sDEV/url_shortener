@@ -98,7 +98,9 @@ app.post("/shortUrls",  async(req, res) => {
 
         if (response)
         {
-            return res.sendStatus(201);
+            const shortUrls = await ShortUrl.find()
+            
+            return res.status(201).send({urls: shortUrls})
         }
     
     } catch(err) {
