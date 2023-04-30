@@ -23,6 +23,7 @@ app.use(cors());
 
 // Cookies
 app.use(session({
+    proxy: true,
     secret: "session_sec",
     resave: false,
     saveUninitialized: false,
