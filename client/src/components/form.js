@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { TextField, Button, FormControl } from '@mui/material';
 
+import { AppContext } from "../context"
+
+
 export const Form = () => {
+    const {state: [state, setState]} = useContext(AppContext)
 
     const [formData, setFormData] = useState({
         fullUrl: "",
@@ -31,17 +35,32 @@ export const Form = () => {
                 'Content-Type': 'application/json',
                 'Content-Length': JSON.stringify(urlForm).length.toString()
             },
-            body: await JSON.stringify(urlForm)
+            body: JSON.stringify(urlForm)
         }
 
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/shortUrls`, requestOptions)
             
-            if (!response.ok)
+            if (response.ok)
+            {
+                const data = await response.json();
+
+                setState({
+                    ...state,
+                    data: data.urls
+                })
+            }
+            else 
             {
                 throw new Error("Network response was not 'ok'")
+
             }
+            
             console.log("Url Shortened!")
+            setFormData({
+                fullUrl: "",
+                submitBlock: true
+            })
         }
         catch(err)
         {
