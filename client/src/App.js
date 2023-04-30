@@ -16,6 +16,7 @@ function App() {
       try {
         const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
         const resData = await res.json()
+        console.log(resData);
         await setState({
           ...state, 
           data: resData.urls || [],
