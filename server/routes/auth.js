@@ -8,12 +8,22 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
 
 // @desc Google auth callback
 // @route /auth/google/callback
-router.get("/google/callback", passport.authenticate("google",
-    {
-        failureRedirect: "/login/fail",
-        successRedirect: process.env.CLIENT_URL
-    }
-))
+// router.get("/google/callback", passport.authenticate("google",
+//     {
+//         failureRedirect: "/login/fail",
+//         successRedirect: process.env.CLIENT_URL
+//     }),
+    
+//     )
+
+router.get("/google/callback", passport.authenticate("google", {
+    failureRedirect: "/login/fail",
+    successRedirect: process.env.CLIENT_URL
+}), (req, res) => {
+    res.locals.user = req.user;
+    res.json({ success: true });
+});
+
 
 // @desc Google auth logout
 // @route /auth/logout
