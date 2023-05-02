@@ -32,9 +32,9 @@ app.use(session({
 }))
 
 // Passport
+require("./config/passport")(passport) 
 app.use(passport.initialize())
 app.use(passport.session())
-require("./config/passport")(passport) 
 
 
 // Auth routes
@@ -71,7 +71,7 @@ app.get("/allUrls", async(req, res) => {
         const shortUrls = await ShortUrl.find()
 
         out.urls = shortUrls || []
-        return res.status(201).send(out)    
+        return res.status(201).send(out)
     }
     catch(err)
     {
