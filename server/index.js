@@ -27,8 +27,14 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI 
-    })
+        mongoUrl: process.env.MONGODB_URI
+    }),
+
+    //new
+    cookie: {
+        sameSite: "none",
+        secure: true
+    }
 }))
 
 app.use(function(req, res, next) {
