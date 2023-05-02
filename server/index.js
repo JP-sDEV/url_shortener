@@ -24,8 +24,8 @@ app.use(cors());
 app.use(session({
     proxy: true,
     secret: "session_sec",
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI 
     })
