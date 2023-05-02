@@ -16,19 +16,16 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
     
 //     )
 
-router.get("/google/callback", 
-            passport.authenticate("google", {
-            failureRedirect: "/login/fail",
-            function(req, res)
-            {
-                res.redirect(process.env.CLIENT_URL)
-            }
-    // successRedirect: process.env.CLIENT_URL
-}))
-// , (req, res) => {
-//     res.locals.user = req.user;
-//     res.json({ success: true });
-// });
+router.get(
+    "/google/callback",
+    passport.authenticate("google", {
+      failureRedirect: "/login/fail",
+    }),
+    function (req, res) {
+      res.redirect(process.env.CLIENT_URL);
+    }
+  );
+  
 
 
 // @desc Google auth logout
