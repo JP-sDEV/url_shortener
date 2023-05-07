@@ -26,11 +26,11 @@ connectDB()
 
 // Middleware
 // Request info
-app.use(express.json());
-
 app.use(express.urlencoded({
     extended: true
 }))
+
+app.use(express.json());
 
 // Cookies
 app.use(session({
