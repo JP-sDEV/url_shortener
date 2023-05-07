@@ -47,16 +47,12 @@ app.use(session({
     })
 }))
 
+// CORS
+app.use(cors())
+
 // Passport
 app.use(passport.initialize())
 app.use(passport.session())
-// app.use(passport.authenticate('session'));
-
-// CORS
-app.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true
-}))
 
 // HELPER
 
