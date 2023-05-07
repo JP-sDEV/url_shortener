@@ -30,8 +30,6 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-app.use(express.json());
-
 // Cookies
 app.use(session({
     secret: "session_sec",
