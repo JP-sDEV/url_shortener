@@ -50,7 +50,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // CORS
-app.use(cors())
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true
+}))
 
 // HELPER
 
