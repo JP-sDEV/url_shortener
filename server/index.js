@@ -29,7 +29,7 @@ connectDB()
 app.use(express.json());
 
 app.use(express.urlencoded({
-    extended: false
+    extended: true
 }))
 
 // Cookies
@@ -49,8 +49,8 @@ app.use(session({
 
 // Passport
 app.use(passport.initialize())
-// app.use(passport.session())
-app.use(passport.authenticate('session'));
+app.use(passport.session())
+// app.use(passport.authenticate('session'));
 
 // CORS
 app.use(cors({
