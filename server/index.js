@@ -83,6 +83,7 @@ app.get("/allUrls", async(req, res) => {
 
     const shortUrls = await ShortUrl.find()
     out.urls = shortUrls
+    console.log(out)
     res.send(out)
 })
 
