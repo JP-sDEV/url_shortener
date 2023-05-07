@@ -26,20 +26,22 @@ connectDB()
 
 // Middleware
 // Request info
-app.use(express.urlencoded({
-    extended: true
-}))
 app.use(express.json());
+
+app.use(express.urlencoded({
+    extended: false
+}))
 
 // Cookies
 app.use(session({
     secret: "session_sec",
     resave: false,
-    cookie: { 
+    cookie: {  
+                secure: true,
                 domain: process.env.CLIENT_URL,
                 maxAge: 1000 * 60 * 60 * 24 * 7
             },
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI 
     })
@@ -47,7 +49,8 @@ app.use(session({
 
 // Passport
 app.use(passport.initialize())
-app.use(passport.session())
+// app.use(passport.session())
+app.use(passport.authenticate('session'));
 
 // CORS
 app.use(cors({
