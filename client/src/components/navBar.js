@@ -1,5 +1,4 @@
 import React, {useContext} from "react"
-import { useNavigate } from "react-router-dom"
 import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material'
 import GitHubLogo from "../icons/github.svg"
 import {AppContext} from "../context";
@@ -7,12 +6,10 @@ import {AppContext} from "../context";
 export const NavBar = () => {
 
     const {state: [state, setState]} = useContext(AppContext)
-    const history = useNavigate()
     
     const handleAuthRedirect = () => {
         // window.open(`${process.env.REACT_APP_SERVER_URL}/auth/google`, "_self")
-        // window.location.href = `${process.env.REACT_APP_SERVER_URL}/auth/google`
-        history.push(`${process.env.REACT_APP_SERVER_URL}/auth/google`);
+        window.location.href = `${process.env.REACT_APP_SERVER_URL}/auth/google`
     }
 
     const handleLogout = async () => {
