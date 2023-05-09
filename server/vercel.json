@@ -13,15 +13,22 @@
         "destination": "/index.js"
       }
     ],
+
     "routes": [
       {
         "src": "/getUser",
-        "method": "GET",
+        "methods": ["GET"],
+        "dest": "https://url-shortener-api-mauve.vercel.app/getUser",
         "headers": {
-          "Access-Control-Allow-Origin": "*"
+          "Access-Control-Allow-Origin": "https://url-shortener-client-one.vercel.app"
         }
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/index.js"
       }
     ],
+   
     "headers": [
       {
         "source": "/(.*)",
