@@ -30,6 +30,11 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+// CORS
+app.use(cors({ origin: `${process.env.SERVER_URL}`, credentials: true }))
+
+app.set("trust proxy", 1);
+
 // Cookies
 app.use(session({
     secret: "session_secret",
@@ -44,9 +49,6 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
     }
 }))
-
-// CORS
-app.use(cors())
 
 // Passport
 app.use(passport.initialize())
