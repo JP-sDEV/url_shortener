@@ -51,7 +51,7 @@ app.set("trust proxy", 1);
 app.use(session({
     secret: "session_secret",
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI 
     }),
@@ -75,7 +75,14 @@ app.get("/testConnection", async (req, res) => {
     });
   });
 
-  app.get('/getUser', (req, res) => {
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.status(401).send('Unauthorized');
+}
+
+  app.get('/getUser', isLoggedIn, (req, res) => {
     console.log(req.user)
     res.send(req.user)
 })
