@@ -37,6 +37,14 @@ app.use(cors({
     credentials: true 
 }))
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', allowedOrigins);
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  });
+  
+
 app.set("trust proxy", 1);
 
 // Cookies
