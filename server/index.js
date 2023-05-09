@@ -31,7 +31,11 @@ app.use(express.urlencoded({
 }))
 
 // CORS
-app.use(cors({ origin: `${process.env.CLIENT_URL}`, credentials: true }))
+const allowedOrigins = ['https://url-shortener-client-one.vercel.app'];
+app.use(cors({ 
+    origin: allowedOrigins,
+    credentials: true 
+}))
 
 app.set("trust proxy", 1);
 
