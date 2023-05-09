@@ -14,7 +14,7 @@ export const NavBar = () => {
 
     const handleLogout = async () => {
         const logout = async() => {
-            await fetch("/auth/logout")
+            await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/logout`)
         }
 
         await logout()
