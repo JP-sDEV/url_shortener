@@ -8,27 +8,7 @@ import './App.css';
 
 function App() {
 
-  const { state: [state, setState], theme: [theme] } = useContext(AppContext)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      
-      try {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
-        const resData = await res.json()
-        console.log(resData);
-        await setState({
-          ...state, 
-          data: resData.urls || [],
-          userId: resData.userId || "",
-          name: resData.name|| ""
-        })
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [])
+  const { theme: [theme] } = useContext(AppContext)
 
   return (
     <div className="App">

@@ -32,12 +32,17 @@ app.use(express.urlencoded({
 
 // Cookies
 app.use(session({
-    secret: "session_sec",
-    resave: false,
-    saveUninitialized: false,
+    secret: "session_secret",
+    resave: true,
+    saveUninitialized: true,
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI 
-    })
+    }),
+    cookie: {
+        sameSite: "none",
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
+    }
 }))
 
 // CORS
@@ -56,6 +61,10 @@ app.get("/testConnection", async (req, res) => {
     });
   });
 
+  app.get('/getUser', (req, res) => {
+    res.send(req.user)
+})
+
 // Auth routes
 app.use('/auth', require("./routes/auth"))
 
@@ -65,18 +74,10 @@ app.get("/allUrls", async(req, res) => {
 
     const out = {
         urls: null,
-        userId: null,
-        name: null
-    }
-
-    if (req.user) { 
-        out.userId = req.user._id,
-        out.name = req.user.firstName 
     }
 
     const shortUrls = await ShortUrl.find()
     out.urls = shortUrls
-    console.log(out)
     res.send(out)
 })
 
