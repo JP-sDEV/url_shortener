@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react"
+import React, { useContext } from "react"
 import { ThemeProvider } from '@mui/material/styles';
 import { NavBar } from "./components/navBar";
 import { Modal } from "./components/modal";
@@ -8,27 +8,7 @@ import './App.css';
 
 function App() {
 
-  const { state: [state, setState], theme: [theme] } = useContext(AppContext)
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
-        const res = await fetch("/allUrls")
-        const resData = await res.json()
-        console.log("ResData: ", resData);
-        await setState({
-          ...state, 
-          data: resData.urls,
-          userId: resData.userId,
-          name: resData.name
-        })
-
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [])
+  const { theme: [theme] } = useContext(AppContext)
 
   return (
     <div className="App">

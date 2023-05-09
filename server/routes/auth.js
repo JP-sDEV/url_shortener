@@ -14,6 +14,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile"] }))
 router.get("/google/callback", passport.authenticate("google",
     {
         failureRedirect: "/login/fail",
+        session: true,
         successRedirect: "http://localhost:3000/"
     }
 ))
@@ -29,7 +30,6 @@ router.get("/logout", (req, res) => {
 // @desc Failed Google login
 // @route /auth/login/fail
 router.get("/login/fail", (req, res) => {
-    console.log("fail")
     if (req.user) {
         res.status(401).json({
             success: true,

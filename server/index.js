@@ -26,27 +26,46 @@ connectDB()
 
 // Middleware
 // Request info
+app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }))
-app.use(express.json());
+
+app.set("trust proxy", 1);
+
+
+// CORS
+app.use(cors(
+    {
+        origin: "http://localhost:3000",
+        credentials: true
+    }
+))
 
 // Cookies
 app.use(session({
-    secret: "session_sec",
-    resave: false,
-    saveUninitialized: false,
+    secret: "session_secret",
+    resave: true,
+    saveUninitialized: true,
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI 
-    })
+    }),
+    cookie: {
+        sameSite: "none",
+        secure: true,
+        maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
+    }
 }))
 
 // Passport
 app.use(passport.initialize())
 app.use(passport.session())
 
-// CORS
-app.use(cors())
+
+// HELPER
+// Auth routes
+app.use('/auth', require("./routes/auth"))
+
 
 app.get("/testConnection", async (req, res) => {
     return res.status(200).json({
@@ -55,8 +74,9 @@ app.get("/testConnection", async (req, res) => {
     });
   });
 
-// Auth routes
-app.use('/auth', require("./routes/auth"))
+app.get('/getUser', (req, res) => {
+    res.send(req.user)
+})
 
 // @desc Gets all URLs, and checks if user is logged in
 // @route GET /allUrls
@@ -64,17 +84,18 @@ app.get("/allUrls", async(req, res) => {
 
     const out = {
         urls: null,
-        userId: null,
-        name: null
+        // userId: null,
+        // name: null
     }
 
-    if (req.user) { 
-        out.userId = req.user._id,
-        out.name = req.user.firstName 
-    }
+    // if (req.user) { 
+    //     out.userId = req.user._id,
+    //     out.name = req.user.firstName 
+    // }
 
     const shortUrls = await ShortUrl.find()
     out.urls = shortUrls
+    // console.log(out)
     res.send(out)
 })
 
@@ -165,14 +186,14 @@ app.get("/get/:shortUrl", async(req, res) => {
 })
 
 // Serve static assets if in production
-if (process.env.NODE_ENV === "production") {
+// if (process.env.NODE_ENV === "production") {
     
-    // Use static folder
-    app.use(express.static('client/build'))
+//     // Use static folder
+//     app.use(express.static('client/build'))
 
-    app.get("*", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-    })
-}
+//     app.get("*", (req, res) => {
+//         res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+//     })
+// }
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is up")) 

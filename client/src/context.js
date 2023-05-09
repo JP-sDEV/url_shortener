@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { createTheme } from '@mui/material/styles';
 export const AppContext = createContext(null)
 
@@ -23,6 +23,47 @@ export default ({children}) => {
             }
           })
     });
+
+    useEffect(() => {
+      const getUser = async () => {
+        const options = {
+          method: "GET",
+          credentials: "include"
+        };
+        try {
+          const res = await fetch("http://localhost:5000/getUser", options);
+          const data = await res.json();
+          if (data) {
+            setState(prevState => ({
+              ...prevState,
+              userId: data._id,
+              name: data.firstName
+            }));
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    
+      const fetchData = async () => {
+        try {
+          // const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
+          const res = await fetch("http://localhost:5000/allUrls")
+          const resData = await res.json()
+          setState(prevState => ({
+            ...prevState, 
+            data: resData.urls
+          }));
+        } catch (error) {
+          console.error(error)
+        }
+      }
+    
+      getUser();
+      fetchData();
+    }, []);
+    
+    
 
     const store = {
         state: [state, setState],
