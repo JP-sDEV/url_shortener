@@ -31,7 +31,7 @@ app.use(express.urlencoded({
 }))
 
 // CORS
-app.use(cors({ origin: `${process.env.SERVER_URL}`, credentials: true }))
+app.use(cors({ origin: `${process.env.CLIENT_URL}`, credentials: true }))
 
 app.set("trust proxy", 1);
 
