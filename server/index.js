@@ -67,13 +67,15 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // HELPER
-
 app.get("/testConnection", async (req, res) => {
     return res.status(200).json({
       title: "Express Testing",
       message: "The app is working properly!",
     });
   });
+
+// Auth routes
+app.use('/auth', require("./routes/auth"))
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
@@ -87,8 +89,7 @@ function isLoggedIn(req, res, next) {
     res.send(req.user)
 })
 
-// Auth routes
-app.use('/auth', require("./routes/auth"))
+
 
 // @desc Gets all URLs, and checks if user is logged in
 // @route GET /allUrls
