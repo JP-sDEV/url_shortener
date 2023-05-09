@@ -13,7 +13,15 @@
         "destination": "/index.js"
       }
     ],
-
+    "routes": [
+      {
+        "src": "/getUser",
+        "method": "GET",
+        "headers": {
+          "Access-Control-Allow-Origin": "*"
+        }
+      }
+    ],
     "headers": [
       {
         "source": "/(.*)",
