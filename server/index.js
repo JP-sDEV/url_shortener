@@ -56,7 +56,6 @@ app.use(session({
         mongoUrl: process.env.MONGODB_URI 
     }),
     cookie: {
-        domain: "https://url-shortener-client-one.vercel.app",
         sameSite: "none",
         secure: true,
         maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
