@@ -12,7 +12,6 @@ module.exports = function(passport) {
     },
     
     async (accessToken, refreshToken, profile, done) => {
-        console.log("PROFILE: ", profile)
         const newUser = {
             googleId: profile.id,
             firstName: profile.name.givenName
@@ -37,7 +36,6 @@ module.exports = function(passport) {
     }))
 
     passport.serializeUser((user, done) => {
-        console.log("serializeUser: 'OK'")
         done(null, user.id)
     })
 
@@ -49,7 +47,5 @@ module.exports = function(passport) {
         } catch (err) {
             done(err)
         }
-        console.log("deserializeUser: 'OK'")
-        // await User.findById(id, (err, user) => done(err, user))
     })
 }
