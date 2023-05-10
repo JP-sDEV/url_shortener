@@ -4,25 +4,16 @@ const express = require("express")
 const connectDB = require("./config/db")
 const mongoose = require("mongoose")
 const ShortUrl = require("./models/ShortUrl")
-const passport = require("passport")
 const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cors = require("cors")
-// dotenv.config({ path: '.env' }) 
 
 // Init App + DB Connection
 const app = express()
-require("./config/passport")(passport) 
 
 
 // MongoDB Atlas (cloud)
 connectDB() 
-
-// MongoDB Local
-// mongoose.connect(process.env.LOCALHOST, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// })
 
 // Middleware
 // Request info
@@ -31,19 +22,7 @@ app.use(express.urlencoded({
 }))
 
 // CORS
-const allowedOrigins = ['https://url-shortener-client-one.vercel.app'];
-app.use(cors({ 
-    origin: allowedOrigins,
-    credentials: true 
-}))
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', allowedOrigins);
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-  });
-  
+app.use(cors())
 
 app.set("trust proxy", 1);
 
@@ -54,17 +33,8 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI 
-    }),
-    cookie: {
-        sameSite: "lax",
-        secure: true,
-        maxAge: 1000 * 60 * 60 * 24 * 7 // One Week
-    }
+    })
 }))
-
-// Passport
-app.use(passport.initialize())
-app.use(passport.session())
 
 // HELPER
 app.get("/testConnection", async (req, res) => {
@@ -73,22 +43,6 @@ app.get("/testConnection", async (req, res) => {
       message: "The app is working properly!",
     });
   });
-
-// Auth routes
-app.use('/auth', require("./routes/auth"))
-
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.status(401).send('Unauthorized');
-}
-
-  app.get('/getUser', isLoggedIn, (req, res) => {
-    console.log(req.user)
-    res.send(req.user)
-})
-
 
 
 // @desc Gets all URLs, and checks if user is logged in
@@ -112,11 +66,7 @@ app.post("/shortUrls",  async(req, res) => {
         const shortUrl = {
             full: String(req.body.full)
         }
-        
-        if (req.user) {
-            shortUrl.user = req.user
-        }
-    
+
         await ShortUrl.create(shortUrl)
     
     } catch(err) {
@@ -189,16 +139,5 @@ app.get("/get/:shortUrl", async(req, res) => {
     } 
 
 })
-
-// Serve static assets if in production
-// if (process.env.NODE_ENV === "production") {
-    
-//     // Use static folder
-//     app.use(express.static('client/build'))
-
-//     app.get("*", (req, res) => {
-//         res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-//     })
-// }
 
 app.listen(process.env.PORT || 5000, () => console.log("Server is up")) 

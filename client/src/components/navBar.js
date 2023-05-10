@@ -1,31 +1,8 @@
-import React, {useContext} from "react"
-import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material'
+import React from "react"
+import { AppBar, Box, Toolbar, Typography } from '@mui/material'
 import GitHubLogo from "../icons/github.svg"
-import {AppContext} from "../context";
 
 export const NavBar = () => {
-
-    const {state: [state, setState]} = useContext(AppContext)
-    
-    const handleAuthRedirect = () => {
-        // window.open(`${process.env.REACT_APP_SERVER_URL}/auth/google`, "_self")
-        window.location.href = `${process.env.REACT_APP_SERVER_URL}/auth/google`
-    }
-
-    const handleLogout = async () => {
-        const logout = async() => {
-            await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/logout`)
-        }
-
-        await logout()
-        await setState({
-            ...state,
-            userId: null,
-            name: null
-        })
-
-        window.location.reload(false)
-    }
 
     return (
         <Box>
@@ -38,15 +15,6 @@ export const NavBar = () => {
             {/* fills the mid part (puts buttons on each side) */}
                 <Typography sx={{ flexGrow: 1 }} />
 
-                {
-                    state.userId ?
-                        <div>
-                            <Typography variant="button" sx={{mr: {xs:2}}}>Hi {state.name}</Typography>
-                            <Button variant="outlined" onClick={handleLogout} color="inherit" sx={{ }}>LOGOUT</Button>
-                        </div>
-                        :
-                        <Button variant="outlined" onClick={handleAuthRedirect} color="inherit" sx={{ }}>GOOGLE LOGIN</Button>
-                }
             </Toolbar>
         </AppBar>
         </Box>

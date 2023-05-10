@@ -25,26 +25,6 @@ export default ({children}) => {
     });
 
     useEffect(() => {
-      const getUser = async () => {
-        const options = {
-          method: "GET",
-          credentials: "include"
-        };
-        try {
-          const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/getUser`, options);
-          const data = await res.json();
-          if (data) {
-            setState(prevState => ({
-              ...prevState,
-              userId: data._id,
-              name: data.firstName
-            }));
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      };
-
       const fetchData = async () => {
         try {
           const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
@@ -57,8 +37,6 @@ export default ({children}) => {
           console.error(error)
         }
       }
-
-      getUser();
       fetchData();
     }, []);
 
