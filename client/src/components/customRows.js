@@ -17,7 +17,7 @@ import { AppContext } from "../context"
       alert(".Shorty Copied!");
     }
 
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
 
       const delForm = {
         "id": e.target.value
@@ -28,7 +28,7 @@ import { AppContext } from "../context"
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(delForm)
       }
-        fetch(`${process.env.REACT_APP_SERVER_URL}/delUrl`, requestOptions)
+        await fetch(`${process.env.REACT_APP_SERVER_URL}/delUrl`, requestOptions)
         .then(res => res.json())
         .then(data => setState({
           ...state,
