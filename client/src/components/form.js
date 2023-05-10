@@ -57,6 +57,7 @@ export const Form = () => {
             }
             
             console.log("Url Shortened!")
+            
             setFormData({
                 fullUrl: "",
                 submitBlock: true

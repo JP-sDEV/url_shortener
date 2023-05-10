@@ -69,6 +69,11 @@ app.post("/shortUrls",  async(req, res) => {
         }
 
         await ShortUrl.create(shortUrl)
+
+        const shortUrls = await ShortUrl.find()
+    
+        res.send({urls: shortUrls})
+
     
     } catch(err) {
         console.error(err)
