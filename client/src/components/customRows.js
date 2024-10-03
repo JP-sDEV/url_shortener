@@ -3,6 +3,7 @@ import { TableCell, TableRow, Button } from "@mui/material";
 import { AppContext } from "../context";
 import { getShortUrl } from "../helpers/getters";
 import { deleteShortUrl } from "../helpers/deletes";
+import { mutate } from "swr";
 
 export const CustomRows = ({ full, short, clicks, created }) => {
   const {
@@ -26,10 +27,9 @@ export const CustomRows = ({ full, short, clicks, created }) => {
 
     const data = await deleteShortUrl(e.target.value, state.userId);
 
-    setState((prevState) => ({
-      ...prevState,
-      data: data.urls,
-    }));
+    if (data.ok) {
+      mutate(`${process.env.REACT_APP_SERVER_URL}/v1/urls?page=${state.page}`);
+    }
   };
 
   return (

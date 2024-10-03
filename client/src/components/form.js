@@ -2,11 +2,11 @@ import React, { useState, useContext } from "react";
 import { TextField, Button, FormControl } from "@mui/material";
 import { AppContext } from "../context";
 import { getAllUrls } from "../helpers/getters";
+import { mutate } from "swr";
 
 export const Form = () => {
   const {
     state: [state, setState],
-    page: page,
   } = useContext(AppContext);
 
   const [formData, setFormData] = useState({
@@ -48,11 +48,9 @@ export const Form = () => {
       // Get request
       if (response.ok) {
         try {
-          const data = await getAllUrls(page);
-          setState((prevState) => ({
-            ...prevState,
-            data: data.urls,
-          }));
+          mutate(
+            `${process.env.REACT_APP_SERVER_URL}/v1/urls?page=${state.page}`
+          );
         } catch (error) {
           console.error(error);
         }

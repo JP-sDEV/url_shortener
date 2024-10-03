@@ -9,7 +9,7 @@ export const NavBar = () => {
   } = useContext(AppContext);
 
   const handleAuthRedirect = () => {
-    window.open("http://localhost:5001/auth/google", "_self"); //
+    window.open("http://localhost:5001/auth/google", "_self");
   };
 
   const handleLogout = async () => {
@@ -20,8 +20,10 @@ export const NavBar = () => {
     await logout();
     await setState({
       ...state,
-      userId: null,
-      name: null,
+      user: {
+        id: null,
+        name: null,
+      },
     });
 
     window.location.reload(false);
@@ -42,10 +44,10 @@ export const NavBar = () => {
           {/* fills the mid part (puts buttons on each side) */}
           <Typography sx={{ flexGrow: 1 }} />
 
-          {state.userId ? (
+          {state.user.id ? (
             <div>
               <Typography variant="button" sx={{ mr: { xs: 2 } }}>
-                Hi {state.name}
+                Hi {state.user.name}
               </Typography>
               <Button
                 variant="outlined"

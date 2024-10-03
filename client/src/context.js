@@ -1,14 +1,33 @@
-import React, { useState, useEffect, createContext, cache } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { createTheme } from "@mui/material/styles";
-import { getAllUrls, getProfile } from "./helpers/getters";
+import { getProfile } from "./helpers/getters";
+import useSWR from "swr";
 
+const fetcher = async (url) => {
+  const response = await fetch(url, {
+    method: "GET",
+    credentials: "include", // Include cookies in the request
+  });
+
+  // Check if the response is OK, otherwise throw an error
+  if (!response.ok) throw new Error("Error fetching data");
+
+  return response.json(); // Return the JSON data directly
+};
+
+// Define the AppContext
 export const AppContext = createContext(null);
 
 const AppProvider = ({ children }) => {
   const [state, setState] = useState({
-    data: [],
-    userId: null,
-    name: null,
+    data: {
+      urls: [],
+      userUrls: [],
+    },
+    user: {
+      id: null,
+      name: null,
+    },
     page: 1,
   });
 
@@ -25,28 +44,37 @@ const AppProvider = ({ children }) => {
     }),
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getAllUrls();
-        setState((prevState) => ({
-          ...prevState,
-          data: data.urls,
-        }));
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  // Use SWR to fetch URLs
+  const { data: swrData, error: urlsError } = useSWR(
+    `${process.env.REACT_APP_SERVER_URL}/v1/urls?page=${state.page}`,
+    fetcher
+  );
 
+  // Update the state when URLs are fetched
+  useEffect(() => {
+    if (swrData) {
+      setState((prevState) => ({
+        ...prevState,
+        data: {
+          ...prevState.data,
+          urls: swrData.urls, // Update the state with the fetched URLs
+        }, // Update the state with the fetched URLs
+      }));
+    }
+  }, [swrData]); // Only run when URLs change
+
+  // Fetch user profile
+  useEffect(() => {
     const fetchProfile = async () => {
       try {
         const data = await getProfile();
-
         if (data) {
           setState((prevState) => ({
             ...prevState,
-            userId: data.id ? data.id : null,
-            name: data.name ? data.name : null,
+            user: {
+              id: data.id || null,
+              name: data.name || null,
+            },
           }));
         }
       } catch (error) {
@@ -54,9 +82,14 @@ const AppProvider = ({ children }) => {
       }
     };
 
-    fetchData();
     fetchProfile();
-  }, [setState]);
+  }, []); // Only run once on mount
+
+  // Handle loading and error states
+  if (urlsError) return <div>Error loading URLs</div>;
+  if (!swrData) return <div>Loading...</div>;
+
+  console.log("SWR Data: ", swrData);
 
   const store = {
     state: [state, setState],

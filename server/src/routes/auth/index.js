@@ -37,14 +37,11 @@ router.post('/logout', function (req, res, next) {
 router.get('/profile', async (req, res) => {
     try {
         if (req.isAuthenticated()) {
-            // You can customize the user profile response
             const userProfile = req.user.profile;
             const hashedEmail = hash(req.user.profile._json.email);
             const data = { name: userProfile.name.givenName, id: hashedEmail }; // id: hashed email
 
             res.status(200).json(data);
-        } else {
-            res.status(401).json({ msg: 'Unauthorized' });
         }
     } catch (err) {
         console.error(err);

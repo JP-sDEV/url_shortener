@@ -24,10 +24,13 @@ async function getShortUrl(shortID) {
 
 async function getProfile() {
   try {
-    const response = await fetch("http://localhost:5001/auth/profile", {
-      method: "GET",
-      credentials: "include", // include credentials (cookies) in the request
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/auth/profile`,
+      {
+        method: "GET",
+        credentials: "include", // include credentials (cookies) in the request
+      }
+    );
 
     if (response.status === 200) {
       const userProfile = await response.json();
