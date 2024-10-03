@@ -1,74 +1,71 @@
 import React, { useContext } from "react";
-import { TableCell, TableRow, Button } from '@mui/material';
-import { AppContext } from "../context"
+import { TableCell, TableRow, Button } from "@mui/material";
+import { AppContext } from "../context";
+import { getShortUrl } from "../helpers/getters";
+import { deleteShortUrl } from "../helpers/deletes";
 
- export const CustomRows = ({_id, full, short, clicks, created}) => {
-     
-    const {state: [state, setState]} = useContext(AppContext)
+export const CustomRows = ({ full, short, clicks, created }) => {
+  const {
+    state: [state, setState],
+  } = useContext(AppContext);
 
-    const handleShortUrlClick = (e) => {
-        fetch(`${process.env.REACT_APP_SERVER_URL}/${e.target.value}`)
-        .then(res => res.json())
-        .then(data =>  (window.open(data.url, "_blank")))
-      } 
+  const handleShortUrlClick = async (e) => {
+    const url = await getShortUrl(e.target.value);
+    window.open(url, "_blank");
+  };
 
-    const handleCopyToClipBoard = async(e) => {
-      await navigator.clipboard.writeText(`${process.env.REACT_APP_SERVER_URL}/get/${e.target.value}`);
-      alert(".Shorty Copied!");
-    }
+  const handleCopyToClipBoard = async (e) => {
+    await navigator.clipboard.writeText(
+      `${process.env.REACT_APP_SERVER_URL}/v1/urls/${e.target.value}`
+    );
+    alert(".Shorty Copied!");
+  };
 
-    const handleDelete = (e) => {
+  const handleDelete = async (e) => {
+    e.preventDefault();
 
-      const delForm = {
-        "id": e.target.value
-      }
-    
-      const requestOptions = {
-        method: "DELETE",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(delForm)
-      }
-        fetch(`${process.env.REACT_APP_SERVER_URL}/delUrl`, requestOptions)
-        .then(res => res.json())
-        .then(data => setState({
-          ...state,
-          data: data.urls
-        }))
-        .then(() => console.log("Shorty Deleted!"))
-        .catch((err) => {
-          console.error(err)
-        })
-    }
+    const data = await deleteShortUrl(e.target.value, state.userId);
 
-     return (
-        <TableRow
-        key={_id}
-        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        hover={true}>
+    setState((prevState) => ({
+      ...prevState,
+      data: data.urls,
+    }));
+  };
 
-            <TableCell align="left">
-            <Button href={full} target="_blank">
-                {full}
-            </Button>
-            </TableCell>
+  return (
+    <TableRow
+      key={short}
+      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      hover={true}
+    >
+      <TableCell align="left">
+        <Button href={full} target="_blank">
+          {full}
+        </Button>
+      </TableCell>
 
-            <TableCell align="center">
-            <Button onClick={(e) => handleShortUrlClick(e)} variant="text" value={short}>
-                https://{short}.shorty
-            </Button>
-            <Button onClick={(e) => handleCopyToClipBoard(e)} value={short}>📋</Button>
-            </TableCell>
+      <TableCell align="center">
+        <Button
+          onClick={(e) => handleShortUrlClick(e)}
+          variant="text"
+          value={short}
+        >
+          https://{short}.shorty
+        </Button>
+        <Button onClick={(e) => handleCopyToClipBoard(e)} value={short}>
+          📋
+        </Button>
+      </TableCell>
 
-            <TableCell align="center">{clicks}</TableCell>
+      <TableCell align="center">{clicks}</TableCell>
 
-            <TableCell align="center" >
-            {created.slice(0,10)}
-            </TableCell>
+      <TableCell align="center">{created.slice(0, 10)}</TableCell>
 
-            <TableCell align="center" >
-            <Button onClick={(e) => handleDelete(e)} value={_id}>🗑️</Button>
-            </TableCell>
-
-      </TableRow>
-     )
- }
+      <TableCell align="center">
+        <Button onClick={(e) => handleDelete(e)} value={short} type="button">
+          🗑️
+        </Button>
+      </TableCell>
+    </TableRow>
+  );
+};

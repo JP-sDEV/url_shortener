@@ -1,0 +1,5 @@
+# Use the official MongoDB image from Docker Hub
+FROM mongo:latest
+
+# Set the working directory
+WORKDIR /docker-entrypoint-initdb.d

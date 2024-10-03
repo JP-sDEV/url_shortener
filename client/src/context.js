@@ -1,72 +1,69 @@
-import React, { useState, useEffect, createContext } from "react";
-import { createTheme } from '@mui/material/styles';
-export const AppContext = createContext(null)
+import React, { useState, useEffect, createContext, cache } from "react";
+import { createTheme } from "@mui/material/styles";
+import { getAllUrls, getProfile } from "./helpers/getters";
 
-export default ({children}) => {
+export const AppContext = createContext(null);
 
-    const [state, setState] = useState({ 
-        data: [], 
-        userId: null,
-        name: null
-    });
+const AppProvider = ({ children }) => {
+  const [state, setState] = useState({
+    data: [],
+    userId: null,
+    name: null,
+    page: 1,
+  });
 
-    const [theme] = useState({
+  const [theme] = useState({
+    main: createTheme({
+      palette: {
+        primary: {
+          main: "#434343",
+        },
+      },
+      typography: {
+        fontFamily: "Courier New",
+      },
+    }),
+  });
 
-        main:createTheme({
-            palette: {
-              primary: {
-                main: "#434343",
-              }
-            },
-            typography: {
-              fontFamily: 'Courier New'
-            }
-          })
-    });
-
-    useEffect(() => {
-      const getUser = async () => {
-        const options = {
-          method: "GET",
-          credentials: "include"
-        };
-        try {
-          const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/getUser`, options);
-          const data = await res.json();
-          if (data) {
-            setState(prevState => ({
-              ...prevState,
-              userId: data._id,
-              name: data.firstName
-            }));
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      };
-
-      const fetchData = async () => {
-        try {
-          const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allUrls`)
-          const resData = await res.json()
-          setState(prevState => ({
-            ...prevState, 
-            data: resData.urls
-          }));
-        } catch (error) {
-          console.error(error)
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllUrls();
+        setState((prevState) => ({
+          ...prevState,
+          data: data.urls,
+        }));
+      } catch (error) {
+        console.error(error);
       }
+    };
 
-      getUser();
-      fetchData();
-    }, []);
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfile();
 
-    const store = {
-        state: [state, setState],
-        theme: [theme]
-    }
+        if (data) {
+          setState((prevState) => ({
+            ...prevState,
+            userId: data.id ? data.id : null,
+            name: data.name ? data.name : null,
+          }));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-    return <AppContext.Provider value={store}>{children}</AppContext.Provider>
+    fetchData();
+    fetchProfile();
+  }, [setState]);
 
-    }
+  const store = {
+    state: [state, setState],
+    theme: [theme],
+  };
+
+  return <AppContext.Provider value={store}>{children}</AppContext.Provider>;
+};
+
+export default AppProvider;
