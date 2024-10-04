@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import { createTheme } from "@mui/material/styles";
-import { getProfile } from "./helpers/getters";
+import { getProfile, getUserUrls } from "./helpers/getters";
 import useSWR from "swr";
 
 const fetcher = async (url) => {
@@ -58,7 +58,7 @@ const AppProvider = ({ children }) => {
         data: {
           ...prevState.data,
           urls: swrData.urls, // Update the state with the fetched URLs
-        }, // Update the state with the fetched URLs
+        },
       }));
     }
   }, [swrData]); // Only run when URLs change
@@ -84,6 +84,38 @@ const AppProvider = ({ children }) => {
 
     fetchProfile();
   }, []); // Only run once on mount
+
+  // Fetch user urls
+  useEffect(() => {
+    const fetchUserUrls = async () => {
+      if (state.user.id) {
+        try {
+          const data = await getUserUrls(state.user.id);
+          if (data) {
+            setState((prevState) => ({
+              ...prevState,
+              data: {
+                ...prevState.data,
+                userUrls: data || [],
+              },
+            }));
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          user: {
+            id: null,
+            name: null,
+          },
+        }));
+      }
+    };
+
+    fetchUserUrls();
+  }, [state.user.id, swrData]); // Run when user logs out, or when url list changes
 
   // Handle loading and error states
   if (urlsError) return <div>Error loading URLs</div>;

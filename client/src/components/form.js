@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import { TextField, Button, FormControl } from "@mui/material";
 import { AppContext } from "../context";
-import { getAllUrls } from "../helpers/getters";
+// import { getAllUrls } from "../helpers/getters";
 import { mutate } from "swr";
 
 export const Form = () => {
   const {
-    state: [state, setState],
+    state: [state],
   } = useContext(AppContext);
 
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ export const Form = () => {
 
     const urlForm = {
       full: formData.fullUrl,
-      user: state.userId ? state.userId : null,
+      user: state.user.id ? state.user.id : null,
     };
 
     const requestOptions = {

@@ -41,4 +41,25 @@ async function getProfile() {
   }
 }
 
-module.exports = { getAllUrls, getShortUrl, getProfile };
+async function getUserUrls(userId) {
+  // console.log("userID: ", userId);
+  try {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/v1/userUrls`, {
+      method: "GET",
+      credentials: "include", // include credentials (cookies) in the request
+      headers: {
+        "Content-Type": "application/json",
+        "User-ID": userId, // Set userId in the header
+      },
+    });
+    console.log("res: ", res.body);
+    if (res.status === 200) {
+      const data = await res.json();
+      return data.userUrls;
+    }
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+  }
+}
+
+module.exports = { getAllUrls, getShortUrl, getProfile, getUserUrls };

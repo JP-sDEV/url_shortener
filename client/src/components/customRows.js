@@ -7,7 +7,7 @@ import { mutate } from "swr";
 
 export const CustomRows = ({ full, short, clicks, created }) => {
   const {
-    state: [state, setState],
+    state: [state],
   } = useContext(AppContext);
 
   const handleShortUrlClick = async (e) => {
@@ -25,11 +25,9 @@ export const CustomRows = ({ full, short, clicks, created }) => {
   const handleDelete = async (e) => {
     e.preventDefault();
 
-    const data = await deleteShortUrl(e.target.value, state.userId);
+    await deleteShortUrl(e.target.value, state.user.id);
 
-    if (data.ok) {
-      mutate(`${process.env.REACT_APP_SERVER_URL}/v1/urls?page=${state.page}`);
-    }
+    mutate(`${process.env.REACT_APP_SERVER_URL}/v1/urls?page=${state.page}`);
   };
 
   return (

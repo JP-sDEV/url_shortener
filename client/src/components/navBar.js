@@ -14,19 +14,25 @@ export const NavBar = () => {
 
   const handleLogout = async () => {
     const logout = async () => {
-      await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/logout`);
+      await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
     };
 
     await logout();
-    await setState({
-      ...state,
+
+    setState((prevState) => ({
+      ...prevState,
       user: {
         id: null,
         name: null,
       },
-    });
-
-    window.location.reload(false);
+      data: {
+        ...prevState.data,
+        userUrls: [],
+      },
+    }));
   };
 
   return (
