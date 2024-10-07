@@ -16,5 +16,7 @@ module.exports = {
     testTimeout: 5000,
     coveragePathIgnorePatterns: [
         '/tests/helpers/*', // exclude test setup
+        '/src/routes/auth/*', // google auth tested manually
+        '/src/config/auth/*',
     ],
 };

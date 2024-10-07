@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">90.47% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/18</span>
+                <span class='fraction'>19/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/8</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">90.47% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/18</span>
+                <span class='fraction'>19/21</span>
             </div>
         
             
@@ -102,80 +102,89 @@
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const ShortUrl = require('../../models/ShortUrl');
 const { createSuccessResponse, createErrorResponse } = require('../../response');
-const { validate, validateURL } = require('../../helpers/validation');
+const { validateURL } = require('../../helpers/validation');
 &nbsp;
 async function postUrl(req, res) {
     try {
-        const url = String(req.body.full);
+        const url = req.body.full ? String(req.body.full) : String('');
+        const user = req.body.user ? String(req.body.user) : null;
 &nbsp;
-        // ID has to be String type, and non-empty
-        if (!validate(url) || url.length == 0) {
+        if (url.length === 0) {
             return res.status(422).json(createErrorResponse(`Cannot process url: ${url}`));
         }
 &nbsp;
         const isValidURL = await validateURL(url);
+&nbsp;
         if (!isValidURL) {
             return res
                 .status(422)
                 .json(createErrorResponse(`Invalid URL, cannot reach host: ${url}`));
         }
 &nbsp;
-        const shortUrl = {
-            full: String(url),
-        };
-&nbsp;
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (req.user) {
-<span class="cstat-no" title="statement not covered" >            shortUrl.user = req.user;</span>
+        const short = { full: url };
+        if (user) {
+            short.user = user;
         }
 &nbsp;
-        const shorty = await ShortUrl.create(shortUrl);
+        const shorty = await ShortUrl.create(short);
 &nbsp;
-        // return the inserted doc
-        return res.status(201).json(createSuccessResponse(shorty._doc));
+        // Create a copy of the shorty._doc object
+        const responseBody = { ...shorty._doc };
+&nbsp;
+        // Delete the _id property
+        delete responseBody._id;
+&nbsp;
+        return res.status(201).json(createSuccessResponse(responseBody));
     } catch (err) {
-<span class="cstat-no" title="statement not covered" >        console.error(err);</span>
-<span class="cstat-no" title="statement not covered" >        res.status(500).send({ err: err });</span>
+<span class="cstat-no" title="statement not covered" >        console.error('ApplicationError: ', err);</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(500).json(createErrorResponse(err.message || 'Internal Server Error'));</span>
     }
 }
 &nbsp;
@@ -187,7 +196,7 @@ module.exports.postUrl = postUrl;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-17T15:51:00.198Z
+                at 2024-10-07T15:38:23.865Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

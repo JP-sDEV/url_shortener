@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.12.4",
+    "@maxmind/geoip2-node": "^5.0.0",
     "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

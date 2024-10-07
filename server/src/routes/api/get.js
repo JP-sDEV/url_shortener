@@ -1,7 +1,7 @@
 const ShortUrl = require('../../models/ShortUrl');
-const User = require('../../models/User');
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const { validateID } = require('../../helpers/validation');
+const { getLocation } = require('../../helpers/location');
 
 async function getAllUrls(req, res) {
     try {
@@ -37,6 +37,12 @@ async function getShortUrlById(req, res) {
     try {
         const id = req.params.id;
         let data = {};
+        const ip = req.clientIp;
+        let location;
+
+        if (ip) {
+            location = await getLocation(ip);
+        }
 
         // ID has to be String type, and non-empty
         if (!validateID(id)) {
@@ -53,8 +59,19 @@ async function getShortUrlById(req, res) {
         }
 
         shortUrl.clicks++;
+
+        // Accessing and updating the map using Mongoose Map methods
+        if (shortUrl.accessed.get(location)) {
+            shortUrl.accessed.set(location, shortUrl.accessed.get(location) + 1);
+        } else {
+            shortUrl.accessed.set(location, 1);
+        }
         await shortUrl.save();
         data.shortUrl = shortUrl;
+
+        await ShortUrl.findOne({
+            short: id,
+        });
 
         return res.status(200).json(createSuccessResponse(data));
     } catch (err) {
@@ -64,15 +81,16 @@ async function getShortUrlById(req, res) {
 
 async function getUserUrls(req, res) {
     try {
+        const userId = req.headers['user-id'];
         let data = {};
-        const user = User.findOne({ googleId: req.user.id });
-        if (!req.user || !user) {
-            const message = !req.user ? 'User not given' : 'User not found';
+        if (!userId) {
+            const message = 'User not given';
             return res.status(422).send(createErrorResponse(message));
         }
 
-        const userUrls = ShortUrl.find({ user: req.user.id });
-        data.urls = userUrls;
+        const userUrls = await ShortUrl.find({ user: userId });
+        console.log('Data: ', data);
+        data.userUrls = userUrls;
 
         res.status(200).json(createSuccessResponse(data));
     } catch (err) {

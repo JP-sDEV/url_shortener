@@ -6,6 +6,7 @@ const session = require('express-session');
 // const MongoStore = require('connect-mongo');
 // const mongoose = require('mongoose');
 const cors = require('cors');
+const requestIp = require('request-ip');
 
 const helmet = require('helmet');
 
@@ -45,6 +46,9 @@ app.use(
         credentials: true, // Allow credentials (cookies) to be sent with requests
     })
 );
+
+// // IP
+app.use(requestIp.mw());
 
 // Passport
 passport.use(authenticate.strategy());
