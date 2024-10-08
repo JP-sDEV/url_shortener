@@ -11,7 +11,7 @@ async function deleteShortUrl(shortID, userId) {
 
     // DELETE request
     await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/v1/urls/${shortID}`,
+      `${process.env.SERVER_URL}/v1/urls/${shortID}`,
       requestOptions
     );
 

@@ -47,7 +47,7 @@ const AppProvider = ({ children }) => {
 
   // Use SWR to fetch URLs
   const { data: swrData, error: urlsError } = useSWR(
-    `${process.env.REACT_APP_SERVER_URL}/v1/urls?page=${state.page}`,
+    `${process.env.SERVER_URL}/v1/urls?page=${state.page}`,
     fetcher
   );
 

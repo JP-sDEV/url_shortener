@@ -20,7 +20,7 @@ export const CustomRows = ({ full, short, clicks, created }) => {
 
   const handleCopyToClipBoard = async (e) => {
     await navigator.clipboard.writeText(
-      `${process.env.REACT_APP_SERVER_URL}/v1/urls/${e.target.value}`
+      `${process.env.SERVER_URL}/v1/urls/${e.target.value}`
     );
     alert(".Shorty Copied!");
   };
@@ -34,7 +34,7 @@ export const CustomRows = ({ full, short, clicks, created }) => {
 
     await deleteShortUrl(e.target.value, state.user.id);
 
-    mutate(`${process.env.REACT_APP_SERVER_URL}/v1/urls?page=${state.page}`);
+    mutate(`${process.env.SERVER_URL}/v1/urls?page=${state.page}`);
   };
 
   return (
