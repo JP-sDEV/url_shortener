@@ -29,6 +29,7 @@ const AppProvider = ({ children }) => {
       name: null,
     },
     page: 1,
+    viewType: "all",
   });
 
   const [theme] = useState({

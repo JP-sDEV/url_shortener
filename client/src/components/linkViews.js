@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   Table,
   TableBody,
@@ -17,9 +17,8 @@ import { AppContext } from "../context";
 
 export const LinkViews = () => {
   const {
-    state: [state],
+    state: [state, setState],
   } = useContext(AppContext);
-  const [viewType, setViewType] = useState("all");
 
   const tabSx = {
     ".MuiTabs-indicator": {
@@ -28,12 +27,15 @@ export const LinkViews = () => {
   };
 
   const handleChange = (e, newValue) => {
-    setViewType(newValue);
+    setState((prevState) => ({
+      ...prevState,
+      viewType: newValue,
+    }));
   };
 
   const renderViewType = () => {
     // display all short urls
-    if (viewType === "all") {
+    if (state.viewType === "all") {
       return state.data.urls && state.data.urls.length > 0 ? (
         state.data.urls.map((u) => (
           <CustomRows
@@ -69,7 +71,7 @@ export const LinkViews = () => {
     <div style={{ margin: "1.5rem" }}>
       <Box sx={{ width: "100%", bgcolor: "background.paper" }} fullWidth={true}>
         <Tabs
-          value={viewType}
+          value={state.viewType}
           onChange={handleChange}
           centered
           variant="fullWidth"
@@ -96,7 +98,7 @@ export const LinkViews = () => {
           <Table style={{ tableLayout: "auto" }} aria-label="custom table">
             <TableHead>
               <TableRow style={{ backgroundColor: "#434343" }}>
-                <TableCell align="left" style={{ color: "#f5f5f5" }}>
+                <TableCell align="center" style={{ color: "#f5f5f5" }}>
                   Original Link (Full Url)
                 </TableCell>
                 <TableCell align="center" style={{ color: "#f5f5f5" }}>
@@ -105,6 +107,10 @@ export const LinkViews = () => {
                 <TableCell align="center" style={{ color: "#f5f5f5" }}>
                   Shortened Url Clicks
                 </TableCell>
+                <TableCell
+                  align="center"
+                  style={{ color: "#f5f5f5" }}
+                ></TableCell>
                 <TableCell align="center" style={{ color: "#f5f5f5" }}>
                   Date Created (UTC)
                 </TableCell>

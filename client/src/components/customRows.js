@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { TableCell, TableRow, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context";
 import { getShortUrl } from "../helpers/getters";
 import { deleteShortUrl } from "../helpers/deletes";
@@ -9,6 +10,8 @@ export const CustomRows = ({ full, short, clicks, created }) => {
   const {
     state: [state],
   } = useContext(AppContext);
+
+  const navigate = useNavigate();
 
   const handleShortUrlClick = async (e) => {
     const url = await getShortUrl(e.target.value);
@@ -20,6 +23,10 @@ export const CustomRows = ({ full, short, clicks, created }) => {
       `${process.env.REACT_APP_SERVER_URL}/v1/urls/${e.target.value}`
     );
     alert(".Shorty Copied!");
+  };
+
+  const handleSummary = async (e) => {
+    navigate(`/urls/${e.target.value}`);
   };
 
   const handleDelete = async (e) => {
@@ -36,7 +43,7 @@ export const CustomRows = ({ full, short, clicks, created }) => {
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
       hover={true}
     >
-      <TableCell align="left">
+      <TableCell align="center">
         <Button href={full} target="_blank">
           {full}
         </Button>
@@ -56,6 +63,16 @@ export const CustomRows = ({ full, short, clicks, created }) => {
       </TableCell>
 
       <TableCell align="center">{clicks}</TableCell>
+
+      <TableCell align="center">
+        <Button
+          onClick={(e) => handleSummary(e)}
+          variant="outlined"
+          value={short}
+        >
+          Summary
+        </Button>
+      </TableCell>
 
       <TableCell align="center">{created.slice(0, 10)}</TableCell>
 

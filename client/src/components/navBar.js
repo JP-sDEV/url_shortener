@@ -32,6 +32,7 @@ export const NavBar = () => {
         ...prevState.data,
         userUrls: [],
       },
+      viewType: "all",
     }));
   };
 
