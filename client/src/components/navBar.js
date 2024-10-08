@@ -9,12 +9,12 @@ export const NavBar = () => {
   } = useContext(AppContext);
 
   const handleAuthRedirect = () => {
-    window.open(`${process.env.SERVER_URL}/auth/google`, "_self");
+    window.open(`${process.env.REACT_APP_SERVER_URL}/auth/google`, "_self");
   };
 
   const handleLogout = async () => {
     const logout = async () => {
-      await fetch(`${process.env.SERVER_URL}/auth/logout`, {
+      await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

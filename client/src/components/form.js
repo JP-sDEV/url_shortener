@@ -41,7 +41,7 @@ export const Form = () => {
     try {
       // POST request
       const response = await fetch(
-        `${process.env.SERVER_URL}/v1/urls`,
+        `${process.env.REACT_APP_SERVER_URL}/v1/urls`,
         requestOptions
       );
 
@@ -49,7 +49,7 @@ export const Form = () => {
       if (response.ok) {
         try {
           mutate(
-            `${process.env.SERVER_URL}/v1/urls?page=${state.page}`
+            `${process.env.REACT_APP_SERVER_URL}/v1/urls?page=${state.page}`
           );
         } catch (error) {
           console.error(error);

@@ -1,6 +1,8 @@
 async function getAllUrls(page = 1) {
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/v1/urls?page=${page}`);
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/v1/urls?page=${page}`
+    );
     const data = await res.json();
     return data;
   } catch (error) {
@@ -10,7 +12,9 @@ async function getAllUrls(page = 1) {
 
 async function getShortUrl(shortID) {
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/v1/urls/${shortID}`);
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/v1/urls/${shortID}`
+    );
     const data = await res.json();
     return data.shortUrl.full;
   } catch (error) {
@@ -20,10 +24,13 @@ async function getShortUrl(shortID) {
 
 async function getProfile() {
   try {
-    const response = await fetch(`${process.env.SERVER_URL}/auth/profile`, {
-      method: "GET",
-      credentials: "include", // include credentials (cookies) in the request
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/auth/profile`,
+      {
+        method: "GET",
+        credentials: "include", // include credentials (cookies) in the request
+      }
+    );
 
     if (response.status === 200) {
       const userProfile = await response.json();
@@ -37,7 +44,7 @@ async function getProfile() {
 async function getUserUrls(userId) {
   // console.log("userID: ", userId);
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/v1/userUrls`, {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/v1/userUrls`, {
       method: "GET",
       credentials: "include", // include credentials (cookies) in the request
       headers: {
