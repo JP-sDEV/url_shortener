@@ -5,8 +5,8 @@ const { connectDB } = require('../src/config/db');
 // Get express app instance
 const app = require('./app');
 
-// Get port from the process' environment. Default to `8080`
-const port = parseInt(process.env.PORT || '5000', 10);
+// Get port from the process' environment. Default to `5001`
+const port = parseInt(process.env.PORT || '5001', 10);
 
 // Start a server listening on this port
 const server = stoppable(

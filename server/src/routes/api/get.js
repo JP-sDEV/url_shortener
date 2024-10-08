@@ -89,7 +89,6 @@ async function getUserUrls(req, res) {
         }
 
         const userUrls = await ShortUrl.find({ user: userId });
-        console.log('Data: ', data);
         data.userUrls = userUrls;
 
         res.status(200).json(createSuccessResponse(data));

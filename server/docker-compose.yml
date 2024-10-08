@@ -1,20 +1,20 @@
 services:
-  # server:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.node
-  #   ports: 
-  #     - "5001:5001"
-  #   environment:
-  #     NODE_ENV: development
-  #   env_file:
-  #     - .env
-  #   healthcheck:
-  #     test: ['CMD', 'curl', '--fail', 'http://localhost:5001']
-  #     interval: 30s
-  #     retries: 3
-  #     start_period: 10s
-  #     timeout: 10s
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports: 
+      - "5001:5001"
+    environment:
+      NODE_ENV: production
+    env_file:
+      - .env
+    healthcheck:
+      test: ['CMD', 'curl', '--fail', 'http://localhost:5001']
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
 
   mongo:
     build: 

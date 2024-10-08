@@ -13,7 +13,8 @@
     "server": "nodemon src/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint \"./**/*.js\" \"tests/**/*.js\"",
-    "coverage": "jest -c jest.config.js --runInBand --coverage"
+    "coverage": "jest -c jest.config.js --runInBand --coverage",
+    "start": "NODE_ENV=production node src/index.js"
   },
   "author": "Jon Pablo",
   "license": "ISC",
