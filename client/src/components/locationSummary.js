@@ -69,15 +69,20 @@ export const LocationSummary = () => {
             variant="h6"
             component="h2"
             sx={{ pb: 2 }}
+            align="center"
           >
             View Stats for: {urlData && urlData.short ? urlData.short : ""}
           </Typography>
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
               <TableHead>
-                <TableRow>
-                  <TableCell align="center">Country</TableCell>
-                  <TableCell align="center">Views</TableCell>
+                <TableRow style={{ backgroundColor: "#434343" }}>
+                  <TableCell align="center" style={{ color: "#f5f5f5" }}>
+                    Country
+                  </TableCell>
+                  <TableCell align="center" style={{ color: "#f5f5f5" }}>
+                    Views
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
