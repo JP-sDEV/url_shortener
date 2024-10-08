@@ -42,7 +42,7 @@ app.use(
 
 app.use(
     cors({
-        origin: 'http://localhost:3000', // Specify the client URL
+        origin: `${process.env.CLIENT_URL}`, // Specify the client URL
         credentials: true, // Allow credentials (cookies) to be sent with requests
     })
 );
