@@ -58,6 +58,19 @@ passport.use(authenticate.strategy());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req, res, next) => {
+    const allowedOrigin =
+        process.env.NODE_ENV === 'production'
+            ? `${process.env.CLIENT_URL}`
+            : 'http://localhost:3000'; // Specify the client URL
+
+    res.setHeader(
+        'Content-Security-Policy',
+        `default-src 'self'; script-src 'self' ${allowedOrigin} https://vercel.live;`
+    );
+    next();
+});
+
 // Routes
 app.use('/', require('./routes'));
 
