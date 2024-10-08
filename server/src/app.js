@@ -12,7 +12,7 @@ const helmet = require('helmet');
 
 const authenticate = require('./config/auth');
 
-dotenv.config({ path: '../.env' });
+dotenv.config();
 
 const app = express();
 
@@ -42,7 +42,10 @@ app.use(
 
 app.use(
     cors({
-        origin: `${process.env.CLIENT_URL}`, // Specify the client URL
+        origin:
+            process.env.NODE_ENV === 'production'
+                ? `${process.env.CLIENT_URL}`
+                : 'http://localhost:3000', // Specify the client URL
         credentials: true, // Allow credentials (cookies) to be sent with requests
     })
 );
