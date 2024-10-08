@@ -1,10 +1,7 @@
-// const path = require('path');
 const dotenv = require('dotenv');
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
-// const MongoStore = require('connect-mongo');
-// const mongoose = require('mongoose');
 const cors = require('cors');
 const requestIp = require('request-ip');
 
@@ -26,15 +23,14 @@ app.use(
     })
 );
 
-// Cookies
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
         cookie: {
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24 * 7, // one week,
+            secure: process.env.NODE_ENV === 'production', // true if using HTTPS
+            maxAge: 1000 * 60 * 60 * 24 * 7, // one week
             httpOnly: true,
         },
     })
