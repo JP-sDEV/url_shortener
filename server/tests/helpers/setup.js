@@ -1,6 +1,5 @@
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const mongoose = require('mongoose');
-// const ShortUrl = require('../../src/models/ShortUrl');
 
 let mongodb;
 

@@ -1,8 +1,4 @@
-// const path = require('path');
-// const dotenv = require('dotenv');
 const express = require('express');
-// const connectDB = require("./config/db")
-// const mongoose = require('mongoose');
 const ShortUrl = require('./src/models/ShortUrl');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -10,9 +6,6 @@ const cors = require('cors');
 
 // Init App + DB Connection
 const app = express();
-
-// MongoDB Atlas (cloud)
-// connectDB()
 
 // Middleware
 // Request info
