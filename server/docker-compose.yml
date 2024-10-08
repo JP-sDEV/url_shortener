@@ -1,0 +1,29 @@
+services:
+  # server:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.node
+  #   ports: 
+  #     - "5001:5001"
+  #   environment:
+  #     NODE_ENV: development
+  #   env_file:
+  #     - .env
+  #   healthcheck:
+  #     test: ['CMD', 'curl', '--fail', 'http://localhost:5001']
+  #     interval: 30s
+  #     retries: 3
+  #     start_period: 10s
+  #     timeout: 10s
+
+  mongo:
+    build: 
+      context: .
+      dockerfile: Dockerfile.mongo
+    ports: 
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
