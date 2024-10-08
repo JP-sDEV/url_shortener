@@ -10,14 +10,12 @@
     "test:unit": "jest -c jest.config.js --runInBand --",
     "test:integration": "hurl --test --glob \"tests/integration/**/*.hurl\"",
     "build": "npm install",
-    "start": "node src/index.js",
-    "client": "npm start --prefix client",
     "server": "nodemon src/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint \"./**/*.js\" \"tests/**/*.js\"",
     "coverage": "jest -c jest.config.js --runInBand --coverage"
   },
-  "author": "",
+  "author": "Jon Pablo",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.12.4",

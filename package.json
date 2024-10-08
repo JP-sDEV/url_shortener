@@ -6,7 +6,11 @@
     "eject": "react-scripts eject",
     "client": "npm start --prefix client",
     "server": "nodemon index.js --prefix server/src",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client-build": "npm run build --prefix client",
+    "server-build": "npm run build --prefix server",
+    "build:prod": "npm run client-build && npm run server-build",
+    "start:prod": "npm run build:prod && concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "concurrently": "^8.2.2",
