@@ -3,7 +3,7 @@
 const express = require('express');
 // const connectDB = require("./config/db")
 // const mongoose = require('mongoose');
-const ShortUrl = require('./models/ShortUrl');
+const ShortUrl = require('./src/models/ShortUrl');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cors = require('cors');
