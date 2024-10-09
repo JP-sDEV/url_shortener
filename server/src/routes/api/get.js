@@ -2,9 +2,14 @@ const ShortUrl = require('../../models/ShortUrl');
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const { validateID } = require('../../helpers/validation');
 const { getLocation } = require('../../helpers/location');
+const { connectDB } = require('../../config/db');
 
 async function getAllUrls(req, res) {
     try {
+        console.info("src/routes/api/get.js: attempting to connect to mongodb");
+        await connectDB();
+
+        console.log('src/routes/api/get.js: getAllUrls recieved');
         const page = (req.query.page = parseInt(req.query.page) || 1);
         const limit = 15;
 
