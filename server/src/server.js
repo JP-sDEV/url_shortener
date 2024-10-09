@@ -6,14 +6,14 @@ const { connectDB } = require('../src/config/db');
 const app = require('./app');
 
 // Get port from the process' environment. Default to `5001`
-const port = parseInt(process.env.PORT || '5001', 10);
+// const port = parseInt(process.env.PORT || '5001', 10);
 
 // Start a server listening on this port
 const server = stoppable(
-    app.listen(port, () => {
+    app.listen(() => {
         connectDB();
         // Log a message that the server has started, and which port it's using.
-        console.log(`Server started on port ${port}`);
+        console.log(`Server started`);
     })
 );
 
