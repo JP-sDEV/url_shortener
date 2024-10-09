@@ -6,7 +6,7 @@ const { connectDB } = require('../../config/db');
 
 async function getAllUrls(req, res) {
     try {
-        console.info("src/routes/api/get.js: attempting to connect to mongodb");
+        console.info('src/routes/api/get.js: attempting to connect to mongodb');
         await connectDB();
 
         console.log('src/routes/api/get.js: getAllUrls recieved');
@@ -40,6 +40,8 @@ async function getAllUrls(req, res) {
 
 async function getShortUrlById(req, res) {
     try {
+        await connectDB();
+
         const id = req.params.id;
         let data = {};
         const ip = req.clientIp;
@@ -86,6 +88,8 @@ async function getShortUrlById(req, res) {
 
 async function getUserUrls(req, res) {
     try {
+        await connectDB();
+
         const userId = req.headers['user-id'];
         let data = {};
         if (!userId) {

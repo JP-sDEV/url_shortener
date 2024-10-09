@@ -42,7 +42,6 @@ async function getProfile() {
 }
 
 async function getUserUrls(userId) {
-  // console.log("userID: ", userId);
   try {
     const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/v1/userUrls`, {
       method: "GET",

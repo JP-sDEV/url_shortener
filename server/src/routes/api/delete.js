@@ -1,9 +1,12 @@
 const { validateID } = require('../../helpers/validation');
 const ShortUrl = require('../../models/ShortUrl');
 const { createSuccessResponse, createErrorResponse } = require('../../response');
+const { connectDB } = require('../../config/db');
 
 async function deleteUrl(req, res) {
     try {
+        await connectDB();
+
         const id = req.params.id ? String(req.params.id) : String('');
         const user = req.body.userId ? req.body.userId : null;
 

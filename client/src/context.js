@@ -64,27 +64,27 @@ const AppProvider = ({ children }) => {
     }
   }, [swrData]); // Only run when URLs change
 
-  // Fetch user profile
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const data = await getProfile();
-        if (data) {
-          setState((prevState) => ({
-            ...prevState,
-            user: {
-              id: data.id || null,
-              name: data.name || null,
-            },
-          }));
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  // // Fetch user profile
+  // useEffect(() => {
+  //   const fetchProfile = async () => {
+  //     try {
+  //       const data = await getProfile();
+  //       if (data) {
+  //         setState((prevState) => ({
+  //           ...prevState,
+  //           user: {
+  //             id: data.id || null,
+  //             name: data.name || null,
+  //           },
+  //         }));
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchProfile();
-  }, []); // Only run once on mount
+  //   fetchProfile();
+  // }, []); // Only run once on mount
 
   // Fetch user urls
   useEffect(() => {

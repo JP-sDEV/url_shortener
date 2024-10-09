@@ -1,9 +1,11 @@
 const ShortUrl = require('../../models/ShortUrl');
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const { validateURL } = require('../../helpers/validation');
+const { connectDB } = require('../../config/db');
 
 async function postUrl(req, res) {
     try {
+        await connectDB();
         const url = req.body.full ? String(req.body.full) : String('');
         const user = req.body.user ? String(req.body.user) : null;
 
