@@ -31,7 +31,7 @@ app.use(
         cookie: {
             secure: process.env.NODE_ENV === 'production', // true if using HTTPS
             maxAge: 1000 * 60 * 60 * 24 * 7, // one week
-            httpOnly: true,
+            httpOnly: process.env.NODE_ENV === 'production',
         },
     })
 );
