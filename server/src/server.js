@@ -1,9 +1,10 @@
 require('dotenv').config();
 const stoppable = require('stoppable');
-// const { connectDB } = require('../src/config/db');
+const { connectDB } = require('../src/config/db');
 
 // Get express app instance
 const app = require('./app');
+connectDB();
 
 // Get port from the process' environment. Default to `5001`
 const port = parseInt(process.env.PORT || '5001', 10);
