@@ -9,19 +9,40 @@ const router = express.Router();
 // // @route /v1/auth/google
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// @desc Google auth callback
-// @route /auth/google/callback
+// // @desc Google auth callback
+// // @route /auth/google/callback
+// router.get(
+//     '/google/callback',
+//     passport.authenticate('google', {
+//         failureRedirect:
+//             process.env.NODE_ENV === 'production'
+//                 ? `${process.env.CLIENT_URL}`
+//                 : 'http://localhost:3000', // Redirect if authentication fails
+//         session: true,
+//     }),
+//     (req, res) => {
+//         // Redirect the user after successful authentication
+//         res.redirect(
+//             process.env.NODE_ENV === 'production'
+//                 ? `${process.env.CLIENT_URL}`
+//                 : 'http://localhost:3000'
+//         );
+//     }
+// );
+
 router.get(
     '/google/callback',
     passport.authenticate('google', {
         failureRedirect:
             process.env.NODE_ENV === 'production'
                 ? `${process.env.CLIENT_URL}`
-                : 'http://localhost:3000', // Redirect if authentication fails
+                : 'http://localhost:3000',
         session: true,
     }),
     (req, res) => {
-        // Redirect the user after successful authentication
+        console.log('Session after Google Auth:', req.session);
+        console.log('Cookies after Google Auth:', req.cookies);
+
         res.redirect(
             process.env.NODE_ENV === 'production'
                 ? `${process.env.CLIENT_URL}`
@@ -43,6 +64,7 @@ router.post('/logout', function (req, res, next) {
 
 router.get('/profile', async (req, res) => {
     console.info('Is Authenticated:', req.isAuthenticated());
+    console.info('/profile, headers:', req.headers.cookie);
     try {
         if (req.isAuthenticated()) {
             const userProfile = req.user.profile;
