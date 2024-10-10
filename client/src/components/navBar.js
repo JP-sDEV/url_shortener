@@ -45,7 +45,7 @@ export const NavBar = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src={GitHubLogo} style={{ width: "2rem" }} />
+            <img src={GitHubLogo} style={{ width: "2rem" }} alt="" />
           </a>
 
           {/* fills the mid part (puts buttons on each side) */}
