@@ -29,6 +29,9 @@ async function getProfile() {
       {
         method: "GET",
         credentials: "include", // include credentials (cookies) in the request
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
 
