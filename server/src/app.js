@@ -46,9 +46,10 @@ app.use(
 app.use(
     cors({
         origin:
-            process.env.NODE_ENV === 'production'
-                ? `${process.env.CLIENT_URL}`
-                : 'http://localhost:3000', // Specify the client URL
+            // process.env.NODE_ENV === 'production'
+            //     ? `${process.env.CLIENT_URL}`
+            //     : 'http://localhost:3000', // Specify the client URL
+            'https://url-shortener-client-one.vercel.app',
         credentials: true, // Allow credentials (cookies) to be sent with requests
     })
 );
