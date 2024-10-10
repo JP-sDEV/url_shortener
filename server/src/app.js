@@ -38,6 +38,7 @@ app.use(
             maxAge: 1000 * 60 * 60 * 24 * 7, // one week
             httpOnly: process.env.NODE_ENV === 'production', // true if in production
             sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // None for cross-origin
+            domain: '.vercel.app',
         },
     })
 );
