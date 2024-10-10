@@ -10,7 +10,7 @@
     "test:unit": "jest -c jest.config.js --runInBand --",
     "test:integration": "hurl --test --glob \"tests/integration/**/*.hurl\"",
     "build": "npm install",
-    "server": "nodemon src/index.js",
+    "server": "NODE_ENV=dev nodemon src/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "lint": "eslint \"./**/*.js\" \"tests/**/*.js\"",
     "coverage": "jest -c jest.config.js --runInBand --coverage",

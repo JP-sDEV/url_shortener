@@ -14,12 +14,19 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get(
     '/google/callback',
     passport.authenticate('google', {
-        failureRedirect: `${process.env.CLIENT_URL}`, // Redirect if authentication fails
+        failureRedirect:
+            process.env.NODE_ENV === 'production'
+                ? `${process.env.CLIENT_URL}`
+                : 'http://localhost:3000', // Redirect if authentication fails
         session: true,
     }),
     (req, res) => {
         // Redirect the user after successful authentication
-        res.redirect(`${process.env.CLIENT_URL}`);
+        res.redirect(
+            process.env.NODE_ENV === 'production'
+                ? `${process.env.CLIENT_URL}`
+                : 'http://localhost:3000'
+        );
     }
 );
 
