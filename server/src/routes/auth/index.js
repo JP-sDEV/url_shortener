@@ -50,6 +50,8 @@ router.get('/profile', async (req, res) => {
             const data = { name: userProfile.name.givenName, id: hashedEmail }; // id: hashed email
 
             res.status(200).json(data);
+        } else {
+            res.status(401);
         }
     } catch (err) {
         console.error(err);
