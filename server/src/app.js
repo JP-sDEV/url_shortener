@@ -4,6 +4,7 @@ const passport = require('passport');
 const session = require('express-session');
 const cors = require('cors');
 const requestIp = require('request-ip');
+const MongoStore = require('connect-mongo');
 
 const helmet = require('helmet');
 
@@ -28,10 +29,14 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGODB_URI,
+            ttl: 14 * 24 * 60 * 60, // = 14 days. Default session duration
+        }),
         cookie: {
             secure: process.env.NODE_ENV === 'production', // true if using HTTPS
             maxAge: 1000 * 60 * 60 * 24 * 7, // one week
-            httpOnly: !process.env.NODE_ENV === 'production',
+            httpOnly: process.env.NODE_ENV === 'production', // true if in production
         },
     })
 );
