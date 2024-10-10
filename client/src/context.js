@@ -64,27 +64,25 @@ const AppProvider = ({ children }) => {
     }
   }, [swrData]); // Only run when URLs change
 
-  // // Fetch user profile
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     try {
-  //       const data = await getProfile();
-  //       if (data) {
-  //         setState((prevState) => ({
-  //           ...prevState,
-  //           user: {
-  //             id: data.id || null,
-  //             name: data.name || null,
-  //           },
-  //         }));
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
+  // Fetch user profile
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfile();
+        if (data) {
+          setState((prevState) => ({
+            ...prevState,
+            user: {
+              id: data.id || null,
+              name: data.name || null,
+            },
+          }));
+        }
+      } catch (error) {}
+    };
 
-  //   fetchProfile();
-  // }, []); // Only run once on mount
+    fetchProfile();
+  }, []); // Only run once on mount
 
   // Fetch user urls
   useEffect(() => {
@@ -121,8 +119,6 @@ const AppProvider = ({ children }) => {
   // Handle loading and error states
   if (urlsError) return <div>Error loading URLs</div>;
   if (!swrData) return <div>Loading...</div>;
-
-  console.log("SWR Data: ", swrData);
 
   const store = {
     state: [state, setState],

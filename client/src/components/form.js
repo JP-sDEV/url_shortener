@@ -73,7 +73,6 @@ export const Form = () => {
     <div>
       <form onSubmit={handleSubmit} style={{ padding: "0 5%" }}>
         <FormControl
-          fullWidth
           margin="normal"
           sx={{
             display: "flex",

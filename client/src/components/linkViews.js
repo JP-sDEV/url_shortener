@@ -49,7 +49,12 @@ export const LinkViews = () => {
           />
         ))
       ) : (
-        <div>Loading URLs...</div>
+        // Use TableRow and TableCell to show loading message in a table format
+        <TableRow>
+          <TableCell colSpan={6} align="center">
+            Loading URLs...
+          </TableCell>
+        </TableRow>
       );
     } else {
       // display users short urls
@@ -69,7 +74,7 @@ export const LinkViews = () => {
 
   return (
     <div style={{ margin: "1.5rem" }}>
-      <Box sx={{ width: "100%", bgcolor: "background.paper" }} fullWidth={true}>
+      <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
         <Tabs
           value={state.viewType}
           onChange={handleChange}
