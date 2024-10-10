@@ -42,6 +42,7 @@ router.post('/logout', function (req, res, next) {
 });
 
 router.get('/profile', async (req, res) => {
+    console.info('Is Authenticated:', req.isAuthenticated());
     try {
         if (req.isAuthenticated()) {
             const userProfile = req.user.profile;
