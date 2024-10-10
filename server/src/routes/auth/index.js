@@ -42,6 +42,13 @@ router.get(
     (req, res) => {
         console.log('Session after Google Auth:', req.session);
         console.log('Cookies after Google Auth:', req.cookies);
+        
+        // Check for the cookie here
+        if (req.cookies && req.cookies['connect.sid']) {
+            console.log('Cookie is set:', req.cookies['connect.sid']);
+        } else {
+            console.log('Cookie is NOT set');
+        }
 
         res.redirect(
             process.env.NODE_ENV === 'production'
@@ -50,6 +57,7 @@ router.get(
         );
     }
 );
+
 
 // @desc Google auth logout
 // @route /auth/logout
