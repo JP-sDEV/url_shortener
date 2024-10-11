@@ -1,6 +1,3 @@
-// Configure HTTP Basic Auth strategy for Passport, see:
-// https://github.com/http-auth/http-auth-passport
-
 const auth = require('http-auth');
 const authPassport = require('http-auth-passport');
 const authorize = require('./auth-middleware');

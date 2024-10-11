@@ -5,7 +5,6 @@ const { postUrl } = require('./post');
 const { deleteUrl } = require('./delete');
 const { authenticate } = require('../../config/auth');
 
-// Create a router on which to mount our API endpoints
 const router = express.Router();
 
 // GET

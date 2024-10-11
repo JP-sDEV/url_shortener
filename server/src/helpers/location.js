@@ -8,15 +8,12 @@ module.exports.getLocation = async function (ip) {
         const res = reader.country(ip);
         return res.country.isoCode;
     } catch (err) {
-        // console.error('Error:', err);
-
         // Handle AddressNotFoundError explicitly
         if (err.name === 'AddressNotFoundError') {
             console.error('Error: ', `IP: ${ip} not in DB`);
             return 'N/A'; // Return 'N/A' if IP address is not found
         }
 
-        // General error handling (if it's another type of error)
         return err;
     }
 };

@@ -1,5 +1,3 @@
-// src/auth/auth-middleware.js
-
 const passport = require('passport');
 
 const { createErrorResponse } = require('../../response');

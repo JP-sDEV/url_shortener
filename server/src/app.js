@@ -15,7 +15,6 @@ dotenv.config();
 const app = express();
 
 // Middleware
-// Request info
 app.use(helmet());
 app.use(express.json());
 app.use(
@@ -24,7 +23,7 @@ app.use(
     })
 );
 
-app.set('trust proxy', 1);
+app.set('trust proxy', 1); // needed for vercel deployment
 
 app.use(
     session({
@@ -49,12 +48,12 @@ app.use(
         origin:
             process.env.NODE_ENV === 'production'
                 ? `${process.env.CLIENT_URL}`
-                : 'http://localhost:3000', // Specify the client URL
+                : 'http://localhost:3000',
         credentials: true, // Allow credentials (cookies) to be sent with requests
     })
 );
 
-// // IP
+// IP
 app.use(requestIp.mw());
 
 // Passport
@@ -66,7 +65,7 @@ app.use((req, res, next) => {
     const allowedOrigin =
         process.env.NODE_ENV === 'production'
             ? `${process.env.CLIENT_URL}`
-            : 'http://localhost:3000'; // Specify the client URL
+            : 'http://localhost:3000';
 
     res.setHeader(
         'Content-Security-Policy',
