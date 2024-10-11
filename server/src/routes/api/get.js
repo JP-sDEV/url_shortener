@@ -17,7 +17,7 @@ async function getAllUrls(req, res) {
         const totalDocuments = await ShortUrl.countDocuments();
 
         // .find return nulls if no entries
-        const shortUrls = await ShortUrl.find().skip(skip).limit(limit);
+        const shortUrls = await ShortUrl.find().sort({ date: -1 }).skip(skip).limit(limit);
 
         const totalPages = Math.ceil(totalDocuments / limit);
 
@@ -95,7 +95,7 @@ async function getUserUrls(req, res) {
             return res.status(422).send(createErrorResponse(message));
         }
 
-        const userUrls = await ShortUrl.find({ user: userId });
+        const userUrls = await ShortUrl.find({ user: userId }).sort({ date: -1 });
         data.userUrls = userUrls;
 
         res.status(200).json(createSuccessResponse(data));
