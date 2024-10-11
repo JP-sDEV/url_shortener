@@ -6,10 +6,8 @@ const { connectDB } = require('../../config/db');
 
 async function getAllUrls(req, res) {
     try {
-        console.info('src/routes/api/get.js: attempting to connect to mongodb');
         await connectDB();
 
-        console.log('src/routes/api/get.js: getAllUrls recieved');
         const page = (req.query.page = parseInt(req.query.page) || 1);
         const limit = 15;
 
@@ -102,14 +100,7 @@ async function getUserUrls(req, res) {
 
         res.status(200).json(createSuccessResponse(data));
     } catch (err) {
-        return err;
-    }
-}
-
-async function protectedRoute(req, res) {
-    try {
-        return res.status(200).json(createSuccessResponse({ message: 'protected route reached!' }));
-    } catch (err) {
+        res.status(500).json(createErrorResponse(err.message, err.stack));
         return err;
     }
 }
@@ -117,4 +108,3 @@ async function protectedRoute(req, res) {
 module.exports.getAllUrls = getAllUrls;
 module.exports.getShortUrlById = getShortUrlById;
 module.exports.getUserUrls = getUserUrls;
-module.exports.protectedRoute = protectedRoute;

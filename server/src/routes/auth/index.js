@@ -1,13 +1,19 @@
 const express = require('express');
 const passport = require('passport');
 const hash = require('../../helpers/hash');
+const { createErrorResponse } = require('../../response');
 
 const router = express.Router();
 
-// @desc Auth with Google
-// @route /v1/auth/google
+/**
+ * @route GET /auth/google
+ */
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
+/**
+ * @route GET /auth/google/callback
+ * @returns {object} 302 - Success, assigns session cookie to response, and redirects to client
+ */
 router.get(
     '/google/callback',
     passport.authenticate('google', {
@@ -18,16 +24,6 @@ router.get(
         session: true,
     }),
     (req, res) => {
-        console.log('Session after Google Auth:', req.session);
-        console.log('Cookies after Google Auth:', req.cookies);
-
-        // Check for the cookie here
-        if (req.cookies && req.cookies['connect.sid']) {
-            console.log('Cookie is set:', req.cookies['connect.sid']);
-        } else {
-            console.log('Cookie is NOT set');
-        }
-
         res.redirect(
             process.env.NODE_ENV === 'production'
                 ? `${process.env.CLIENT_URL}`
@@ -36,8 +32,10 @@ router.get(
     }
 );
 
-// @desc Google auth logout
-// @route /auth/logout
+/**
+ * @route GET /auth/logout
+ * @returns {object} 200 - Success, removes session cookie client
+ */
 router.post('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) {
@@ -47,9 +45,15 @@ router.post('/logout', function (req, res, next) {
     });
 });
 
+/**
+ * @route GET /auth/profile
+ * @param {boolean} req.authenticated - If user is authenticated
+ * @param {string} req.user.profile._json.email - User's email
+ * @returns {object} 200 - Success, returns user's profile
+ * @returns {Error}  401 - Unauthrorized, user is not authenticated/does not have correct credentials
+ * @returns {Error}  500 - Internal server error
+ */
 router.get('/profile', async (req, res) => {
-    console.info('Is Authenticated:', req.isAuthenticated());
-    console.info('/profile, headers:', req.headers.cookie);
     try {
         if (req.isAuthenticated()) {
             const userProfile = req.user.profile;
@@ -58,7 +62,7 @@ router.get('/profile', async (req, res) => {
 
             res.status(200).json(data);
         } else {
-            res.status(401);
+            res.status(401).json(createErrorResponse('Unauthorized'));
         }
     } catch (err) {
         console.error(err);

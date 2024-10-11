@@ -7,7 +7,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "test:unit": "jest -c jest.config.js --runInBand --",
+    "test:unit": "NODE_ENV=unit-test jest -c jest.config.js --runInBand --",
     "test:integration": "hurl --test --glob \"tests/integration/**/*.hurl\"",
     "build": "npm install",
     "server": "NODE_ENV=dev nodemon src/index.js",
