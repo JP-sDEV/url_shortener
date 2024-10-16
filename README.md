@@ -3,12 +3,14 @@
 # .Shorty URL (URL Shortener)
 Shorten your URLs, and keep track of the amount of clicks of YOUR link!
 
-[Live App - Here](https://shorty-urlshort.herokuapp.com/)
+[Live App - Here](https://url-shortener-client-one.vercel.app/)
 
 Contents
 ======
+- [.Shorty URL (URL Shortener)](#shorty-url-url-shortener)
+- [Contents](#contents)
   - [Why?](#why)
-  - [Tech Used/Prerequisites](#tech-used)
+  - [Tech Used](#tech-used)
   - [Installation (to run locally)](#installation-to-run-locally)
   - [Want to Contribute?](#want-to-contribute)
 
